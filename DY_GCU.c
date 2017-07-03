@@ -1,3 +1,7 @@
+/*
+ * Software GCU DP9
+*/
+
 #define OSC_FREQ_MHZ 80
 
 #define DSIGNAL_LED_RG14 DSIGNAL_LED_0
