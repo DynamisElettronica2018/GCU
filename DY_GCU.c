@@ -1,25 +1,7 @@
-//#define OSC_FREQ_MHZ 80
+#define OSC_FREQ_MHZ 80
 
 #define DSIGNAL_LED_RG14 DSIGNAL_LED_0
 #define DSIGNAL_LED_RG12 DSIGNAL_LED_1
-
-//#include "./modules/input-output/d_signalLed.c"
-//#include "./libs/dspic.c"
-//#include "./libs/basic.c"
-//#include "./libs/eeprom.c"
-//#include "./libs/gcuRio.h"
-//#include "./modules/d_can.h"
-//#include "./modules/input-output/gearMotor.c"
-//#include "./modules/input-output/clutchMotor.c"
-//#include "./modules/input-output/efi.c"
-//#include "./modules/input-output/buzzer.c"
-//#include "./modules/input-output/sensors.c"
-//#include "./modules/clutch.c"
-//#include "./modules/engineControl.c"
-//#include "modules/shiftTimings.c"
-//#include "modules/gearShift.c"
-//#include "modules/stopLight.c"
-//*/
 
 #include "dspic.h"
 #include "d_signalled.h"
