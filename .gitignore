@@ -4,3 +4,12 @@
 *.ini
 *.lst
 *.mcpds_callertable
+*.mcpds
+*.dct
+*.user*
+*.log
+*.hex
+*.dlt
+*.cfg
+*.brk
+*.bmk
