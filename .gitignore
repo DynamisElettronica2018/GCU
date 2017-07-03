@@ -3,10 +3,10 @@
 *.mcl
 *.ini
 *.lst
-*.mcpds_callertable
+*.mcpds_callertable.txt
 *.mcpds
 *.dct
-*.user*
+*.user.dic
 *.log
 *.hex
 *.dlt
