@@ -5,7 +5,7 @@
 #ifndef DP8_DISPLAY_CONTROLLER_DD_CAN_H
 #define DP8_DISPLAY_CONTROLLER_DD_CAN_H
 
-#include "../libs/can.h"
+#include "can.h"
 
 /*
                 MASCHERE RICEZIONE

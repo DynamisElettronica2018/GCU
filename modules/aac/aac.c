@@ -4,6 +4,11 @@ aac_states aac_currentState;
 int aac_parameters[AAC_NUM_PARAMS];
 int aac_externValues[AAC_NUM_VALUES];
 int aac_dtRelease;      //counter for clutch "slow" release
+/*
+int aac_shiftTry = 0;
+int aac_shiftCounter = 0;
+int aac_targetGear = -1;
+//*/
 float aac_clutchStep;   //step for each "frame" of aac
 
 void aac_execute(void){
@@ -11,7 +16,7 @@ void aac_execute(void){
         case START:
             Efi_setRPMLimiter();
             Clutch_set(100);
-            aac_notifySW(READY);
+            Can_writeByte(SW_AUX_ID, MEX_READY);
             aac_currentState = READY;
             return;
         case READY:
@@ -26,22 +31,25 @@ void aac_execute(void){
 //             Clutch_set(aac_parameters[RAMP_END] + (aac_clutchStep * aac_dtRelease));        //Works iff the cluth paddle is disabled
             Clutch_set(Clutch_get() - aac_clutchStep);
             aac_dtRelease--;
-            if(aac_dtRelease <= 0 || Clutch_get() <= aac_parameters[RAMP_END])
+            if(aac_dtRelease <= 0 || Clutch_get() <= aac_parameters[RAMP_END]){
                 aac_currentState = RUNNING;
                 Clutch_set(0);
                 Efi_unsetRPMLimiter();
+            }
             return;
         case RUNNING:
-        //TODO Check condizioni e cambio
+        //Check condizioni e cambio
             if(gearShift_currentGear == 4){
-                aac_currentState = OFF;
+                aac_stop();
                 return;
             }
-          //parameters for gear is taken using as a index the baseline (RPM_LIMIT_1_2) + (gear - 1)
+        //parameters for gear is taken using as a index the baseline (RPM_LIMIT_1_2) + (gear - 1)
             if(aac_externValues[RPM] >= aac_parameters[RPM_LIMIT_1_2 + gearShift_currentGear - 1]
               && aac_externValues[WHEEL_SPEED] >= aac_parameters[SPEED_LIMIT_1_2 + gearShift_currentGear - 1]){
                 GearShift_up();
             }
+            return;
+        //gearshift check
         default: return;
     }
 }
@@ -66,6 +74,8 @@ void aac_updateParam(const aac_params id, const int value){
         aac_parameters[id] = value;
 }
 
-void aac_notifySW(const aac_notifications mex){
-    //TODO CAN mex to steering wheel
+void aac_stop(void){
+    if(aac_currentState != OFF)
+        Can_writeByte(SW_AUX_ID, MEX_OFF);
+    aac_currentState = OFF;
 }

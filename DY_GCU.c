@@ -20,14 +20,21 @@
 #include "gearshift.h"
 #include "stoplight.h"
 #include "gcu_rio.h"
-#include "aac.h"
+#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-unsigned int gearShift_timings[NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
 
+#ifdef AAC_H
+  extern aac_states aac_currentState;
+  extern int aac_externValues[AAC_NUM_VALUES];
+  int timer1_aac_counter = 0;
+#endif
+
+unsigned int gearShift_timings[NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
+extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
 void GCU_isAlive(void) {
@@ -88,6 +95,15 @@ onTimer1Interrupt{
         Sensors_send();
         timer1_counter2 = 0;
     }
+
+  #ifdef AAC_H
+    timer1_aac_counter += 1;
+    if(timer1_aac_counter == AAC_WORK_RATE_ms){
+        aac_execute();
+        timer1_aac_counter = 0;
+    }
+  #endif
+
 }
 
 onCanInterrupt{
@@ -116,35 +132,63 @@ onCanInterrupt{
         case EFI_GEAR_ID:
             GearShift_setCurrentGear(firstInt);
             break;
+
         case SW_FIRE_ID:
             EngineControl_resetStartCheck();
             EngineControl_start();
             break;
+
         case SW_RIO_GEAR_BRK_STEER_ID:
+          #ifdef AAC_H
+            if (Clutch_get() != 100
+                  &&(firstInt == GEAR_COMMAND_NEUTRAL_DOWN
+                     || firstInt == GEAR_COMMAND_NEUTRAL_UP
+                     || firstInt == GEAR_COMMAND_DOWN))
+                aac_stop();
+          #endif
             GearShift_injectCommand(firstInt);
             break;
+
         case SW_CLUTCH_ID:
-            /*Remove if no AAC*/
+          #ifdef AAC_H
             if(dataBuffer[0] > AAC_CLUTCH_NOISE_LEVEL)
-                aac_currentState = OFF;
-            //*/
+                aac_stop();
+          #endif
             if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
                 Clutch_set(dataBuffer[0]);
             }
             break;
+
         case CAN_ID_TIMES:
-             switch(firstInt){
-                 case CODE_SET:
-                      gearShift_timings[secondInt] = thirdInt;
-                      sendOneTime(secondInt);
-                      break;
-                 case CODE_REFRESH:
-                      sendAllTimes();
-                      break;
-                 default:
-                      break;
-             }
-             break;
+            switch(firstInt){
+                case CODE_SET:
+                     gearShift_timings[secondInt] = thirdInt;
+                     sendOneTime(secondInt);
+                     break;
+                case CODE_REFRESH:
+                     sendAllTimes();
+                     break;
+                default:
+                     break;
+            }
+            break;
+
+        case SW_AUX_ID:
+          #ifdef AAC_H
+            if(aac_currentState == OFF
+              && gearShift_currentGear == GEARSHIFT_NEUTRAL
+              && aac_externValues[WHEEL_SPEED] <= 1){
+                aac_currentState = START;
+                break;
+            }
+            if(aac_currentState == READY){
+                aac_currentState = START_RELEASE;
+                break;
+            }
+            //If none of the previous conditions are met, the aac is stopped
+            aac_stop();
+          #endif
+            break;
 
         default:
             break;
