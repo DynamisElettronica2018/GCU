@@ -14,15 +14,15 @@ void aac_execute(void){
             Clutch_set(aac_timings[RAMP_START]);
             aac_currentState = RELEASING;
             aac_dtRelease = aac_timings[RAMP_TIME] / 10;
-            aac_clutchStep = float((RAMP_START - RAMP_END) * AAC_WORK_RATE_ms / aac_timings[RAMP_TIME]);
+            aac_clutchStep = (float)((RAMP_START - RAMP_END) * AAC_WORK_RATE_ms / aac_timings[RAMP_TIME]);
             return;
         case RELEASING:
 //             Clutch_set(aac_timings[RAMP_END] + (aac_clutchStep * aac_dtRelease));        //Works iff the cluth paddle is disabled
-            Clutch_set(Clutch_get() - aac_clutchStep));
+            Clutch_set(Clutch_get() - aac_clutchStep);
             aac_dtRelease--;
             if(aac_dtRelease <= 0 || Clutch_get() <= aac_timings[RAMP_END])
-                aac_currentState = STOP_RELEASE;
-                Clutch_set(0)
+                aac_currentState = RUNNING;
+                Clutch_set(0);
             return;
         case RUNNING:
         //TODO Check condizioni e cambio 
