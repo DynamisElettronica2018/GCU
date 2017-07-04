@@ -10,6 +10,7 @@ void aac_execute(void){
     switch (aac_currentState) {
         case START:
             Efi_setRPMLimiter();
+            Clutch_set(100);
             aac_notifySW(READY);
             aac_currentState = READY;
             return;

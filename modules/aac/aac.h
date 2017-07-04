@@ -10,8 +10,10 @@
 #include "gearshift.h"
 #include "efi.h"
 
-#define AAC_WORK_RATE_ms   10 //ms
+#define AAC_WORK_RATE_ms   10
 #define CLUTCH_PULL_MAX_TIME_s 10
+#define AAC_CLUTCH_NOISE_LEVEL 5       //margin against accidental clutch lever pulling
+
 #define AAC_NUM_PARAMS    9            //Number of aac_params enum elements
 #define AAC_NUM_VALUES    3            //Number of aac_values enum elements
 
@@ -56,7 +58,8 @@ extern unsigned int gearShift_currentGear;
 //Releases Clutch gradually
 void aac_execute(void);
 
-void aac_start(void);
+//Checks if conditions are valid and modify the current state accordingly
+void aac_checkAndPrepare(void);
 
 void aac_stop(void);
 

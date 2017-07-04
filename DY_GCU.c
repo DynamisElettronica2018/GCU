@@ -20,12 +20,13 @@
 #include "gearshift.h"
 #include "stoplight.h"
 #include "gcu_rio.h"
+#include "aac.h"
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-unsigned int gearShift_timings[NUM_TIMES]; //30 tanto perchè su gcu c'è spazio e così possiamo fare fino a 30 step di cambiata, molto powa
+unsigned int gearShift_timings[NUM_TIMES]; //30 tanto perchï¿½ su gcu c'ï¿½ spazio e cosï¿½ possiamo fare fino a 30 step di cambiata, molto powa
 
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
@@ -123,6 +124,10 @@ onCanInterrupt{
             GearShift_injectCommand(firstInt);
             break;
         case SW_CLUTCH_ID:
+            /*Remove if no AAC*/
+            if(dataBuffer[0] > AAC_CLUTCH_NOISE_LEVEL)
+                aac_currentState = OFF;
+            //*/
             if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
                 Clutch_set(dataBuffer[0]);
             }
