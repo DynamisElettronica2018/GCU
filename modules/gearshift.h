@@ -68,7 +68,7 @@ typedef enum {
 #define GearShift_free      GearMotor_release
 
 //unsigned int gearShift_timings[30]; //30 tanto perchè su gcu c'è spazio e così possiamo fare fino a 30 step di cambiata, molto powa
-extern unsigned int gearShift_timings[NUM_TIMES];
+extern unsigned int gearShift_timings[RIO_NUM_TIMES];
 
 
 void GearShift_init(void);
@@ -106,5 +106,9 @@ void GearShift_loadDefaultTimings(void);
 void GearShift_loadNeutralTimings(void);
 
 int Gearshift_get_time(shiftStep step);
+
+//void GearShift_checkUp(void);
+
+//void GearShift_checkDown(void);
 
 #endif //FIRMWARE_GEARCONTROL_H

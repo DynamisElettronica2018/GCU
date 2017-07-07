@@ -20,20 +20,22 @@
 #include "gearshift.h"
 #include "stoplight.h"
 #include "gcu_rio.h"
-#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+//#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
 //*/
 
-int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0;
+int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
 
 #ifdef AAC_H
   extern aac_states aac_currentState;
   extern int aac_externValues[AAC_NUM_VALUES];
+  extern bool aac_sendingAll = false;
+  extern int aac_timesCounter;
   int timer1_aac_counter = 0;
 #endif
 
-unsigned int gearShift_timings[NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
+unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
@@ -79,6 +81,11 @@ onTimer1Interrupt{
     timer1_counter0 += 1;
     timer1_counter1 += 1;
     timer1_counter2 += 1;
+    timer1_counter3 += 1;
+
+    //STUFF FOR REPEATED SHIFT
+
+    //*/
 
     if (timer1_counter0 > 25) {
         if (!EngineControl_isStarting()) {
@@ -94,6 +101,10 @@ onTimer1Interrupt{
     if (timer1_counter2 == 166) {
         Sensors_send();
         timer1_counter2 = 0;
+    }
+    if (timer1_counter3 == 5) {
+        rio_send();
+        timer1_counter3 = 0;
     }
 
   #ifdef AAC_H
@@ -163,10 +174,10 @@ onCanInterrupt{
             switch(firstInt){
                 case CODE_SET:
                      gearShift_timings[secondInt] = thirdInt;
-                     sendOneTime(secondInt);
+                     rio_sendOneTime(secondInt);
                      break;
                 case CODE_REFRESH:
-                     sendAllTimes();
+                     rio_sendAllTimes();
                      break;
                 default:
                      break;

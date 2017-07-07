@@ -4,8 +4,8 @@
 
 #include "gearshift.h"
 
-unsigned int gearShift_currentGear;
-int gearShift_ticksCounter1, gearShift_ticksCounter2;
+unsigned int gearShift_currentGear, gearShift_targetGear;
+int gearShift_ticksCounter1, gearShift_ticksCounter2, gearShift_ticksCounterTries, gearShift_shiftTries;
 char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 unsigned char gearShift_nextStepValue_A, gearShift_nextStepValue_B;
 
@@ -91,6 +91,15 @@ void GearShift_setNextStep_A(unsigned char step) {
 void GearShift_setNextStep_B(unsigned char step) {
     gearShift_nextStepValue_B = step;
 }
+
+void GearShift_checkUp(void){
+    //chiamate nel millisecond interrupt
+    if(gearShift_ticksCounterTries <= 0){
+
+    }
+}
+
+//void GearShift_checkDown(void);
 
 //All shifting steps
 /*
@@ -297,6 +306,8 @@ void GearShift_msTick(void) {
     }
 }
 
+
+
 /*
 void GearShift_loadDefaultTimings(void){
      //TODO: read from EEPROM
@@ -383,7 +394,35 @@ int Gearshift_get_time(shiftStep step)
      }
 }
 
-void GearShift_loadDefaultTimings(void) {}
+void GearShift_loadDefaultTimings(void) {
+     gearShift_timings[DELAY] = DEFAULT_DELAY;
+     gearShift_timings[UP_REBOUND] = DEFAULT_UP_REBOUND;
+     gearShift_timings[UP_BRAKE] = DEFAULT_UP_BRAKE;
+     gearShift_timings[UP_PUSH_1_2] = DEFAULT_UP_PUSH_1_2;
+     gearShift_timings[UP_PUSH_2_3] = DEFAULT_UP_PUSH_2_3;
+     gearShift_timings[UP_PUSH_3_4] = DEFAULT_UP_PUSH_3_4;
+     gearShift_timings[UP_PUSH_4_5] = DEFAULT_UP_PUSH_4_5;
+     //down
+     gearShift_timings[CLUTCH] = DEFAULT_CLUTCH;
+     gearShift_timings[DN_PUSH] = DEFAULT_DN_PUSH;
+     gearShift_timings[DN_BRAKE] = DEFAULT_DN_BRAKE;
+     gearShift_timings[DN_REBOUND] = DEFAULT_DN_REBOUND;
+     //neutral
+     gearShift_timings[NT_CLUTCH_DELAY] = DEFAULT_NT_CLUTCH_DELAY;
+     gearShift_timings[NT_REBOUND_1_N] = DEFAULT_NT_REBOUND_1_N;
+     gearShift_timings[NT_REBOUND_2_N] = DEFAULT_NT_REBOUND_2_N;
+     gearShift_timings[NT_BRAKE_1_N] = DEFAULT_NT_BRAKE_1_N;
+     gearShift_timings[NT_BRAKE_2_N] = DEFAULT_NT_BRAKE_2_N;
+     gearShift_timings[NT_PUSH_1_N] = DEFAULT_NT_PUSH_1_N;
+     gearShift_timings[NT_PUSH_2_N] = DEFAULT_NT_PUSH_2_N;
+     gearShift_timings[NT_CLUTCH_1_N] = DEFAULT_NT_CLUTCH_1_N;
+     gearShift_timings[NT_CLUTCH_2_N] = DEFAULT_NT_CLUTCH_2_N;
+
+     //Multiple tries
+     gearShift_timings[DOWN_TIME_CHECK] = DEFAULT_DOWN_TIME_CHECK;
+     gearShift_timings[UP_TIME_CHECK] = DEFAULT_UP_TIME_CHECK;
+     gearShift_timings[MAX_TRIES] = DEFAULT_MAX_TRIES;
+}
 
 /*
 void GearShift_loadNeutralTimings(void) {
