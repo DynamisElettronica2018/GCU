@@ -90,7 +90,7 @@ onTimer1Interrupt{
     if (timer1_counter0 > 25) {
         if (!EngineControl_isStarting()) {
             EngineControl_stop();
-            Buzzer_Bip();
+            //Buzzer_Bip();
         }
         timer1_counter0 = 0;
     }
@@ -138,7 +138,7 @@ onCanInterrupt{
         fourthInt = (unsigned int) ((dataBuffer[6] << 8) | (dataBuffer[7] & 0xFF));
     }
 
-    dSignalLed_switch(DSIGNAL_LED_RG12);
+    dSignalLed_switch(DSIGNAL_LED_RG12);              //switch led state on CAN receive
     switch (id) {
         case EFI_GEAR_ID:
             GearShift_setCurrentGear(firstInt);
