@@ -8,7 +8,6 @@
 *.dct
 *.user.dic
 *.log
-*.hex
 *.dlt
 *.cfg
 *.brk
