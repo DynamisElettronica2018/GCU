@@ -187,7 +187,7 @@ onCanInterrupt{
         case SW_AUX_ID:
           #ifdef AAC_H
             if(aac_currentState == OFF
-              && gearShift_currentGear == GEARSHIFT_NEUTRAL
+ //             && gearShift_currentGear == GEARSHIFT_NEUTRAL
               && aac_externValues[WHEEL_SPEED] <= 1){
                 aac_currentState = START;
                 break;

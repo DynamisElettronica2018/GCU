@@ -15,6 +15,7 @@ void aac_execute(void){
     switch (aac_currentState) {
         case START:
             Efi_setRPMLimiter();
+//            Activate Launch Control
             Clutch_set(100);
             Can_writeByte(SW_AUX_ID, MEX_READY);
             aac_currentState = READY;
@@ -24,12 +25,13 @@ void aac_execute(void){
             return;
         case START_RELEASE:
             Clutch_set(aac_parameters[RAMP_START]);
-            aac_dtRelease = aac_parameters[RAMP_TIME] / 10;
+            aac_dtRelease = aac_parameters[RAMP_TIME] / AAC_WORK_RATE_ms;
             aac_clutchStep = (float)((RAMP_START - RAMP_END) * AAC_WORK_RATE_ms / aac_parameters[RAMP_TIME]);
+            aac_currentState = RELEASING;
             return;
         case RELEASING:
 //             Clutch_set(aac_parameters[RAMP_END] + (aac_clutchStep * aac_dtRelease));        //Works iff the cluth paddle is disabled
-            Clutch_set(Clutch_get() - aac_clutchStep);
+            Clutch_set((unsigned char)(Clutch_get() - aac_clutchStep));
             aac_dtRelease--;
             if(aac_dtRelease <= 0 || Clutch_get() <= aac_parameters[RAMP_END]){
                 aac_currentState = RUNNING;
