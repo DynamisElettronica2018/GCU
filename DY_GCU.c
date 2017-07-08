@@ -23,7 +23,7 @@
 //#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
 //*/
 
-int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0;
+int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0 ;
 char bello = 0;
 char isSteeringWheelAvailable;
 
@@ -34,6 +34,10 @@ char isSteeringWheelAvailable;
   extern int aac_timesCounter;
   int timer1_aac_counter = 0;
 #endif
+
+//variables to send data from efi to rio
+extern int rio_efiData[RIO_NUM_EFI_DATA];
+extern int timer1_rioEfiCounter;
 
 unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
 extern unsigned int gearShift_currentGear;
@@ -82,7 +86,7 @@ onTimer1Interrupt{
     timer1_counter1 += 1;
     timer1_counter2 += 1;
     timer1_counter3 += 1;
-
+    timer1_rioEfiCounter -= 1;
     //STUFF FOR REPEATED SHIFT
 
     //*/
@@ -103,8 +107,11 @@ onTimer1Interrupt{
         timer1_counter2 = 0;
     }
     if (timer1_counter3 == 5) {
-        rio_send();
+        rio_sendTimes();
         timer1_counter3 = 0;
+    }
+    if (timer1_rioEfiCounter <= 0) {
+        rio_send();
     }
 
   #ifdef AAC_H
@@ -183,6 +190,20 @@ onCanInterrupt{
                 default:
                      break;
             }
+            break;
+
+        case EFI_OIL_BATT_ID:
+            rio_efiData[POIL] = firstInt;
+            rio_efiData[TOIL_IN] = secondInt;
+            rio_efiData[TOIL_OUT] = thirdInt;
+            rio_efiData[BATTERY] = fourthInt;
+            break;
+
+        case EFI_H2O_ID:
+            rio_efiData[H2O_DC] = firstInt;
+            rio_efiData[TH2O_IN] = secondInt;
+            rio_efiData[TH2O_OUT] = thirdInt;
+            rio_efiData[TH2O_ENGINE] = fourthInt;
             break;
 
         case SW_AUX_ID:

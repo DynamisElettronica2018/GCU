@@ -4,10 +4,14 @@
 #include "can.h"
 
 #define CAN_ID_TIMES    0b11100001000        //1800
-#define CAN_ID_DATA     0b11100001001        //1801    //dati da EFI forward to rio
+#define CAN_ID_DATA_1     0b11100001001        //1801    //dati da EFI forward to rio (H2O)
+#define CAN_ID_DATA_2     0b11100001101        //1805    //dati da EFI forward to rio (Oil and Battery)
 
 #define CODE_SET        0
 #define CODE_REFRESH    1
+
+#define RIO_UPDATE_RATE_ms 1000     //Time between two CAN mex with same data
+#define RIO_BETWEEN_TIME_ms 250      //Time between two CAN mex with different data
 
 #define DEFAULT_DELAY       100
 #define DEFAULT_UP_REBOUND  100
@@ -35,8 +39,6 @@
 #define DEFAULT_DOWN_TIME_CHECK 400
 #define DEFAULT_UP_TIME_CHECK   400
 #define DEFAULT_MAX_TRIES       400
-
-#define RIO_NUM_TIMES 22    //Number of times variables (enums)
 
 typedef enum {
      //Neutral 1->N
@@ -69,14 +71,35 @@ typedef enum {
      //Multiple tries
      DOWN_TIME_CHECK,
      UP_TIME_CHECK,
-     MAX_TRIES
+     MAX_TRIES,
+
+     //Keep Last
+     TIMES_LAST
      }time_id;
+
+ typedef enum{
+     TH2O_ENGINE,
+     TH2O_IN,
+     TH2O_OUT,
+     H2O_DC,
+     TOIL_IN,
+     TOIL_OUT,
+     BATTERY,
+     POIL,
+     //Keep Last
+     DATA_LAST
+ }efi_dataIds;
+
+#define RIO_NUM_TIMES TIMES_LAST    //Number of times variables (enums)
+#define RIO_NUM_EFI_DATA DATA_LAST    //Number of times variables (enums)
 
 extern unsigned int gearShift_timings[RIO_NUM_TIMES];
 
 extern void rio_sendOneTime(time_id pos);
 
 extern void rio_sendAllTimes(void);
+
+extern void rio_sendTimes(void);
 
 extern void rio_send(void);
 
