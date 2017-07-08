@@ -10,15 +10,21 @@ unsigned char engineControl_startCheckCounter;
 void EngineControl_init(void) {
     ENGINE_STARTER_Direction = OUTPUT;
     ENGINE_KILL_Direction = OUTPUT;
+    ENGINE_KEY_Direction = OUTPUT;
 
     ENGINE_KILL = ENGINE_NOT_KILLED;
+    ENGINE_KEY = ENGINE_KEY_ON;
     engineControl_isChecking = FALSE;
     EngineControl_resetStartCheck();
     EngineControl_stop();
 }
 
-void EngineControl_kill(void) {
-    ENGINE_KILL = ENGINE_KILLED;
+void EngineControl_keyOn(void) {
+    ENGINE_KEY = ENGINE_KEY_ON;
+}
+
+void EngineControl_keyOff(void) {
+    ENGINE_KEY = ENGINE_KEY_OFF;
 }
 
 void EngineControl_start(void) {

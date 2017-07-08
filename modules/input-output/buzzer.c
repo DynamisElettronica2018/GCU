@@ -24,6 +24,8 @@ void Buzzer_tick(void) {
         buzzer_ticks -= 1;
         BUZZER_Pin = !BUZZER_Pin;
     }
+    else
+        BUZZER_Pin = 0;
 }
 
 void Buzzer_Bip(void) {

@@ -171,6 +171,7 @@ onCanInterrupt{
             break;
 
         case CAN_ID_TIMES:
+            Buzzer_Bip();
             switch(firstInt){
                 case CODE_SET:
                      gearShift_timings[secondInt] = thirdInt;
