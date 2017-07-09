@@ -40,7 +40,7 @@ void rio_send(void){
     Can_addIntToWritePacket(rio_efiData[rio_efiDataCounter - 3]);
     Can_addIntToWritePacket(rio_efiData[rio_efiDataCounter - 2]);
     Can_addIntToWritePacket(rio_efiData[rio_efiDataCounter - 1]);
-    Can_addIntToWritePacket(rio_efiData[rio_efiDataCounter);
+    Can_addIntToWritePacket(rio_efiData[rio_efiDataCounter]);
     Can_write(rio_canId);
     rio_efiDataCounter -= 4;
     if(rio_efiDataCounter < 3){

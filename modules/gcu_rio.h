@@ -3,7 +3,7 @@
 
 #include "can.h"
 
-#define CAN_ID_TIMES    0b11100001000        //1800
+#define CAN_ID_TIMES      0b11100001000        //1800
 #define CAN_ID_DATA_1     0b11100001001        //1801    //dati da EFI forward to rio (H2O)
 #define CAN_ID_DATA_2     0b11100001101        //1805    //dati da EFI forward to rio (Oil and Battery)
 

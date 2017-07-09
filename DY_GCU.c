@@ -102,15 +102,18 @@ onTimer1Interrupt{
         GCU_isAlive();
         timer1_counter1 = 0;
     }
+
     if (timer1_counter2 == 166) {
         Sensors_send();
         timer1_counter2 = 0;
     }
-    if (timer1_counter3 == 5) {
+    //*/
+    if (timer1_counter3 == 10) {
         rio_sendTimes();
         timer1_counter3 = 0;
     }
     if (timer1_rioEfiCounter <= 0) {
+        dSignalLed_switch(DSIGNAL_LED_RG12);
         rio_send();
     }
 
@@ -145,7 +148,7 @@ onCanInterrupt{
         fourthInt = (unsigned int) ((dataBuffer[6] << 8) | (dataBuffer[7] & 0xFF));
     }
 
-    dSignalLed_switch(DSIGNAL_LED_RG12);              //switch led state on CAN receive
+//    dSignalLed_switch(DSIGNAL_LED_RG12);              //switch led state on CAN receive
     switch (id) {
         case EFI_GEAR_ID:
             GearShift_setCurrentGear(firstInt);
@@ -193,6 +196,7 @@ onCanInterrupt{
             break;
 
         case EFI_OIL_BATT_ID:
+            //Buzzer_Bip();
             rio_efiData[POIL] = firstInt;
             rio_efiData[TOIL_IN] = secondInt;
             rio_efiData[TOIL_OUT] = thirdInt;
