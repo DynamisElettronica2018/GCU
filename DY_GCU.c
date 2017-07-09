@@ -113,7 +113,7 @@ onTimer1Interrupt{
         timer1_counter3 = 0;
     }
     if (timer1_rioEfiCounter <= 0) {
-        dSignalLed_switch(DSIGNAL_LED_RG12);
+//        dSignalLed_switch(DSIGNAL_LED_RG12);
         rio_send();
     }
 
@@ -148,7 +148,7 @@ onCanInterrupt{
         fourthInt = (unsigned int) ((dataBuffer[6] << 8) | (dataBuffer[7] & 0xFF));
     }
 
-//    dSignalLed_switch(DSIGNAL_LED_RG12);              //switch led state on CAN receive
+    dSignalLed_switch(DSIGNAL_LED_RG12);              //switch led state on CAN receive
     switch (id) {
         case EFI_GEAR_ID:
             GearShift_setCurrentGear(firstInt);
