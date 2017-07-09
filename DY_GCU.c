@@ -205,9 +205,9 @@ onCanInterrupt{
 
         case EFI_H2O_ID:
             rio_efiData[H2O_DC] = firstInt;
-            rio_efiData[TH2O_IN] = secondInt;
-            rio_efiData[TH2O_OUT] = thirdInt;
-            rio_efiData[TH2O_ENGINE] = fourthInt;
+            rio_efiData[TH2O_ENGINE] = secondInt;
+            rio_efiData[TH2O_IN] = thirdInt;
+            rio_efiData[TH2O_OUT] = fourthInt;
             break;
 
         case SW_AUX_ID:
