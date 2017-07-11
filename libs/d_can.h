@@ -33,7 +33,7 @@ IMPLEMENTARE CANerror, che livello di complessit‡? quali errori?
 #define GCU_KILL_ID           0b11010001110 //dec 1678
 #define GCU_AUX_ID            0b11011011110 //dec 1758
 
-#define SW_CLUTCH_ID          0b11000000000 //dec 1536
+#define SW_CLUTCH_ID          0b11000000001 //dec 1537
 #define SW_FIRE_ID            0b11011000000 //dec 1728
 #define SW_EBB_ID             0b11001001101 //dec 1613
 #define SW_LAUNCH_ID          0b11010011001 //dec 1689

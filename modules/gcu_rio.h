@@ -2,10 +2,12 @@
 #define GCURIO_H
 
 #include "can.h"
+#include "buzzer.h"
 
 #define CAN_ID_TIMES      0b11100001000        //1800
 #define CAN_ID_DATA_1     0b11100001001        //1801    //dati da EFI forward to rio (H2O)
 #define CAN_ID_DATA_2     0b11100001101        //1805    //dati da EFI forward to rio (Oil and Battery)
+#define CAN_ID_DATA_3     0b11100001110        //1806    //dati da EFI forward to rio (Fan and Fuel)
 
 #define CODE_SET        0
 #define CODE_REFRESH    1
@@ -78,14 +80,21 @@ typedef enum {
      }time_id;
 
  typedef enum{
+    //H2O
      TH2O_ENGINE,
      TH2O_IN,
      TH2O_OUT,
      H2O_DC,
+    //Oil and Battery
      TOIL_IN,
      TOIL_OUT,
      BATTERY,
      POIL,
+    //Fan and Fuel
+     P_FUEL,
+     FAN,
+     INJ1,
+     INJ2,
      //Keep Last
      DATA_LAST
  }efi_dataIds;

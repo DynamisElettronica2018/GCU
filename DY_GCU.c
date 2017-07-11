@@ -4,9 +4,6 @@
 
 #define OSC_FREQ_MHZ 80
 
-#define DSIGNAL_LED_RG14 DSIGNAL_LED_0
-#define DSIGNAL_LED_RG12 DSIGNAL_LED_1
-
 #include "dspic.h"
 #include "d_signalled.h"
 #include "eeprom.h"
@@ -20,17 +17,21 @@
 #include "gearshift.h"
 #include "stoplight.h"
 #include "gcu_rio.h"
-//#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0 ;
 char bello = 0;
 char isSteeringWheelAvailable;
 
+//TODO///////
+//uncommentare il led 14 nel main e commentarlo/rimuoverl in onCanInterrupt
+
+
 #ifdef AAC_H
   extern aac_states aac_currentState;
   extern int aac_externValues[AAC_NUM_VALUES];
-  extern bool aac_sendingAll = false;
+  //extern bool aac_sendingAll = false;
   extern int aac_timesCounter;
   int timer1_aac_counter = 0;
 #endif
@@ -45,9 +46,12 @@ extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettin
 
 void GCU_isAlive(void) {
     Can_resetWritePacket();
-    Can_addIntToWritePacket(CAN_COMMAND_GCU_IS_ALIVE);
-    Can_addIntToWritePacket(Clutch_get());
+    Can_addIntToWritePacket((unsigned int)CAN_COMMAND_GCU_IS_ALIVE);
+    Can_addIntToWritePacket((unsigned int)(Clutch_get() | 0 ));
+    Can_addIntToWritePacket(0);
+    Can_addIntToWritePacket(0);
     Can_write(GCU_CLUTCH_ID);
+
 }
 
 void init(void) {
@@ -61,6 +65,9 @@ void init(void) {
     StopLight_init();
     Buzzer_init();
     Sensors_init();
+  #ifdef AAC_H
+    aac_init();
+  #endif
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
@@ -98,22 +105,22 @@ onTimer1Interrupt{
         }
         timer1_counter0 = 0;
     }
-    if (timer1_counter1 == 100) {
+    if (timer1_counter1 >= 20) {
         GCU_isAlive();
         timer1_counter1 = 0;
     }
 
-    if (timer1_counter2 == 166) {
+    if (timer1_counter2 >= 166) {
         Sensors_send();
         timer1_counter2 = 0;
     }
     //*/
-    if (timer1_counter3 == 10) {
+    if (timer1_counter3 >= 10) {
         rio_sendTimes();
         timer1_counter3 = 0;
     }
     if (timer1_rioEfiCounter <= 0) {
-//        dSignalLed_switch(DSIGNAL_LED_RG12);
+       //dSignalLed_switch(DSIGNAL_LED_RG12);
         rio_send();
     }
 
@@ -148,7 +155,7 @@ onCanInterrupt{
         fourthInt = (unsigned int) ((dataBuffer[6] << 8) | (dataBuffer[7] & 0xFF));
     }
 
-    dSignalLed_switch(DSIGNAL_LED_RG12);              //switch led state on CAN receive
+   //dSignalLed_switch(DSIGNAL_LED_RG12);              //switch led state on CAN receive
     switch (id) {
         case EFI_GEAR_ID:
             GearShift_setCurrentGear(firstInt);
@@ -176,12 +183,12 @@ onCanInterrupt{
                 aac_stop();
           #endif
             if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
+               //Buzzer_Bip();
                 Clutch_set(dataBuffer[0]);
             }
             break;
 
         case CAN_ID_TIMES:
-            Buzzer_Bip();
             switch(firstInt){
                 case CODE_SET:
                      gearShift_timings[secondInt] = thirdInt;
@@ -196,7 +203,6 @@ onCanInterrupt{
             break;
 
         case EFI_OIL_BATT_ID:
-            //Buzzer_Bip();
             rio_efiData[POIL] = firstInt;
             rio_efiData[TOIL_IN] = secondInt;
             rio_efiData[TOIL_OUT] = thirdInt;
@@ -210,20 +216,30 @@ onCanInterrupt{
             rio_efiData[TH2O_OUT] = fourthInt;
             break;
 
+        case EFI_MIXED_ID:
+            rio_efiData[P_FUEL] = firstInt;
+            rio_efiData[FAN] = secondInt;
+            rio_efiData[INJ1] = thirdInt;
+            rio_efiData[INJ2] = fourthInt;
+            break;
+
         case SW_AUX_ID:
           #ifdef AAC_H
-            if(aac_currentState == OFF
+           //dSignalLed_switch(DSIGNAL_LED_RG12);
+            if(aac_currentState == OFF                                  //FOR TESTING
  //             && gearShift_currentGear == GEARSHIFT_NEUTRAL
-              && aac_externValues[WHEEL_SPEED] <= 1){
+ //             && aac_externValues[WHEEL_SPEED] <= 1
+              ){
                 aac_currentState = START;
-                break;
+                //break;
             }
-            if(aac_currentState == READY){
+            else if(aac_currentState == READY){
                 aac_currentState = START_RELEASE;
-                break;
+                //break;
             }
             //If none of the previous conditions are met, the aac is stopped
-            aac_stop();
+            else
+                aac_stop();
           #endif
             break;
 

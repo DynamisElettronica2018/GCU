@@ -42,15 +42,24 @@ void Can_init() {
                      _CAN_CONFIG_PHSEG2_PRG_ON;        // these last two are linked to sync
     CAN1Initialize(2, 4, 3, 4, 2, Can_Init_flags);          // SJW,BRP,PHSEG1,PHSEG2,PROPSEG
     CAN1SetOperationMode(_CAN_MODE_CONFIG, 0xFF);
-
+    /*
     CAN1SetMask(_CAN_MASK_B1, 0b00100000000, _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
     CAN1SetFilter(_CAN_FILTER_B1_F1, 0b00100000000, _CAN_CONFIG_STD_MSG);
     CAN1SetFilter(_CAN_FILTER_B1_F2, 0b00100000000, _CAN_CONFIG_STD_MSG);
 
     CAN1SetMask(_CAN_MASK_B2, 0b11100000100, _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
     CAN1SetFilter(_CAN_FILTER_B2_F1, 0b11000000000, _CAN_CONFIG_STD_MSG);
+    //*/
+    CAN1SetMask(_CAN_MASK_B1, 0, _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
+    CAN1SetFilter(_CAN_FILTER_B1_F1, 0, _CAN_CONFIG_STD_MSG);
+    CAN1SetFilter(_CAN_FILTER_B1_F2, 0, _CAN_CONFIG_STD_MSG);
+
+    CAN1SetMask(_CAN_MASK_B2, 0, _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
+    CAN1SetFilter(_CAN_FILTER_B2_F1, 0, _CAN_CONFIG_STD_MSG);
 
     CAN1SetOperationMode(_CAN_MODE_NORMAL, 0xFF);
+
+    Delay_ms(250);
 
     Can_initInterrupt();
     Can_setWritePriority(CAN_PRIORITY_MEDIUM);
@@ -59,11 +68,11 @@ void Can_init() {
 void Can_read(unsigned long int *id, char dataBuffer[], unsigned int *dataLength, unsigned int *inFlags) {
     if (Can_B0hasBeenReceived()) {
         Can_clearB0Flag();
-        Can1Read(id, dataBuffer, dataLength, &inFlags);
+        Can1Read(id, dataBuffer, dataLength, inFlags);
     }
     else if (Can_B1hasBeenReceived()) {
         Can_clearB1Flag();
-        Can1Read(id, dataBuffer, dataLength, &inFlags);
+        Can1Read(id, dataBuffer, dataLength, inFlags);
     }
 }
 
@@ -89,15 +98,17 @@ void Can_addByteToWritePacket(unsigned char dataOut) {
     can_dataOutLength += 1;
 }
 
-void Can_write(unsigned long int id) {
-    unsigned int sent, i;
+unsigned int Can_write(unsigned long int id) {
+    unsigned int sent, i = 0;
     do {
-        sent = CAN1Write(id, can_dataOutBuffer, can_dataOutLength, Can_getWriteFlags());
+        sent = CAN1Write(id, can_dataOutBuffer, CAN_PACKET_SIZE, Can_getWriteFlags());
         i += 1;
     } while ((sent == 0) && (i < CAN_RETRY_LIMIT));
     if (i == CAN_RETRY_LIMIT) {
         can_err++;
+        return -1;
     }
+    return i;
 }
 
 void Can_setWritePriority(unsigned int txPriority) {
@@ -137,8 +148,13 @@ void Can_clearInterrupt(void) {
 
 void Can_initInterrupt(void) {
     //@formatter:off
+    /*
     INTERRUPT_PROTECT(IEC1BITS.C1IE = 1);
     INTERRUPT_PROTECT(C1INTEBITS.RXB0IE = 1); //An interrupt is generated everytime that a message passes through the mask in buffer 0
     INTERRUPT_PROTECT(C1INTEBITS.RXB1IE = 1); //Suddividere gli ID da ricevere nei due buffer
+    //*/
+    IEC1BITS.C1IE = 1;
+    C1INTEBITS.RXB0IE = 1;
+    C1INTEBITS.RXB1IE = 1;
 //@formatter:on
             }

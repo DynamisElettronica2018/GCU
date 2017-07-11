@@ -7,7 +7,7 @@
 
 #include "d_signalled.h"
 
-#define CAN_RETRY_LIMIT 50
+#define CAN_RETRY_LIMIT 5 //50
 #define CAN_DEFAULT_FLAGS _CAN_TX_STD_FRAME & _CAN_TX_NO_RTR_FRAME
 
 #define onCanInterrupt void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT
@@ -39,13 +39,13 @@ DISICNT = DISI_save; } (void) 0;
 save_to = SRbits.IPL; \
 SET_CPU_IPL(ipl); } (void) 0;
 #define RESTORE_CPU_IPL(saved_to) SET_CPU_IPL(saved_to)
-
+/*
 #define INTERRUPT_PROTECT(x) { \
 int save_sr; \
 SET_AND_SAVE_CPU_IPL(save_sr, 7);\
 x; \
 RESTORE_CPU_IPL(save_sr); } (void) 0;
-
+//*/
 #define CAN_PACKET_SIZE 8
 //>
 
@@ -68,7 +68,7 @@ void Can_addIntToWritePacket(int dataOut);
 
 void Can_addByteToWritePacket(unsigned char dataOut);
 
-void Can_write(unsigned long int id);
+unsigned int Can_write(unsigned long int id);
 
 void Can_setWritePriority(unsigned int txPriority);
 

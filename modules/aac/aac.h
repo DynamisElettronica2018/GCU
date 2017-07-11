@@ -26,7 +26,8 @@ typedef enum{
     READY,
     START_RELEASE,
     RELEASING,
-    RUNNING
+    RUNNING,
+    STOPPING
 }aac_states;
 
 //when modifying entries update AAC_NUM_PARAMS
@@ -58,6 +59,8 @@ typedef enum{
 }aac_values;
 
 extern unsigned int gearShift_currentGear;
+
+void aac_init(void);
 
 //Releases Clutch gradually
 void aac_execute(void);

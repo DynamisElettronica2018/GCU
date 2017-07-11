@@ -10,6 +10,11 @@ int aac_shiftCounter = 0;
 int aac_targetGear = -1;
 //*/
 float aac_clutchStep;   //step for each "frame" of aac
+float aac_clutchValue;
+
+void aac_init(void){
+    aac_currentState = OFF;
+}
 
 void aac_execute(void){
     switch (aac_currentState) {
@@ -19,25 +24,29 @@ void aac_execute(void){
             Clutch_set(100);
             Can_writeByte(SW_AUX_ID, MEX_READY);
             aac_currentState = READY;
+            aac_clutchValue = 100;
             return;
         case READY:
-            Clutch_set(100);
+            Clutch_set(aac_clutchValue);
             return;
         case START_RELEASE:
-            Clutch_set(aac_parameters[RAMP_START]);
+            aac_clutchValue = aac_parameters[RAMP_START];
+            Clutch_set(aac_clutchValue);
             aac_dtRelease = aac_parameters[RAMP_TIME] / AAC_WORK_RATE_ms;
             aac_clutchStep = (float)((RAMP_START - RAMP_END) * AAC_WORK_RATE_ms / aac_parameters[RAMP_TIME]);
             aac_currentState = RELEASING;
             return;
         case RELEASING:
 //             Clutch_set(aac_parameters[RAMP_END] + (aac_clutchStep * aac_dtRelease));        //Works iff the cluth paddle is disabled
-            Clutch_set((unsigned char)(Clutch_get() - aac_clutchStep));
+            aac_clutchValue -= aac_clutchStep;
+            Clutch_set((unsigned char)aac_clutchValue);
             aac_dtRelease--;
             if(aac_dtRelease <= 0 || Clutch_get() <= aac_parameters[RAMP_END]){
-                aac_currentState = RUNNING;
                 Clutch_set(0);
                 Efi_unsetRPMLimiter();
+                aac_currentState = RUNNING;
             }
+            Buzzer_bip();
             return;
         case RUNNING:
         //Check condizioni e cambio
@@ -50,6 +59,10 @@ void aac_execute(void){
               && aac_externValues[WHEEL_SPEED] >= aac_parameters[SPEED_LIMIT_1_2 + gearShift_currentGear - 1]){
                 GearShift_up();
             }
+            return;
+        case STOPPING:
+            Can_writeByte(SW_AUX_ID, MEX_OFF);
+            aac_currentState = OFF;
             return;
         //gearshift check
         default: return;
@@ -78,6 +91,5 @@ void aac_updateParam(const aac_params id, const int value){
 
 void aac_stop(void){
     if(aac_currentState != OFF)
-        Can_writeByte(SW_AUX_ID, MEX_OFF);
-    aac_currentState = OFF;
+        aac_currentState = STOPPING;
 }

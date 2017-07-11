@@ -18,7 +18,8 @@ void rio_sendTimes(void)
         Can_addIntToWritePacket(CODE_SET);
         Can_addIntToWritePacket(rio_timesCounter);
         Can_addIntToWritePacket(gearShift_timings[rio_timesCounter]);
-        Can_write(CAN_ID_TIMES);
+        if(Can_write(CAN_ID_TIMES) < 0)
+            Buzzer_Bip();
         rio_timesCounter -= 1;
         if(!rio_sendingAll || rio_timesCounter < 0){
             rio_sendingAll = FALSE;
@@ -46,10 +47,17 @@ void rio_send(void){
     if(rio_efiDataCounter < 3){
         timer1_rioEfiCounter = RIO_UPDATE_RATE_ms - RIO_BETWEEN_TIME_ms * ((DATA_LAST / 4) - 1);
         rio_efiDataCounter = DATA_LAST - 1;
-        rio_canId = CAN_ID_DATA_2;
+        rio_canId = CAN_ID_DATA_3;
     }
     else{
         timer1_rioEfiCounter = RIO_BETWEEN_TIME_ms;
-        rio_canId = CAN_ID_DATA_1;
+        switch(rio_canId){
+            case CAN_ID_DATA_3:
+                rio_canId = CAN_ID_DATA_2;
+                break;
+            case CAN_ID_DATA_2:
+                rio_canId = CAN_ID_DATA_1;
+                break;
+        }
     }
 }
