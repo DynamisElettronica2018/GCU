@@ -56,6 +56,13 @@ IMPLEMENTARE CANerror, che livello di complessit‡? quali errori?
 #define LAP_ID                0b11000100110 //dec 1574
 #define LAP_AUX_ID            0b11011010010 //dec 1746
 
+#define CAN_ID_TIMES      0b11100001000        //1800
+#define CAN_ID_AAC        0b11100001111        //1807
+#define CAN_ID_DATA_1     0b11100001001        //1801    //dati da EFI forward to rio (H2O)
+#define CAN_ID_DATA_2     0b11100001101        //1805    //dati da EFI forward to rio (Oil and Battery)
+#define CAN_ID_DATA_3     0b11100001110        //1806    //dati da EFI forward to rio (Fan and Fuel)
+
+
 #define CAN_COMMAND_GCU_IS_ALIVE                99
 #define CAN_COMMAND_CHANGE_SHIFT_TIMING         100
 #define CAN_COMMAND_SAVE_SHIFT_TIMINGS          101

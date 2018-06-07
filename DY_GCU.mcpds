@@ -1,0 +1,164 @@
+[DEVICE]
+Name=P30F6012A
+Clock=80000000
+[MEMORY_MODEL]
+Value=0
+[BUILD_TYPE]
+Value=0
+[ACTIVE_TAB]
+Value=DY_GCU.c
+[USE_EEPROM]
+Value=0
+[USE_HEAP]
+Value=0
+[HEAP_SIZE]
+Value=2000
+[EEPROM_DEFINITION]
+Value=
+[FILES]
+Count=17
+File0=DY_GCU.c
+File1=modules\clutch.c
+File2=modules\enginecontrol.c
+File3=modules\gcu_rio.c
+File4=modules\gearshift.c
+File5=modules\stoplight.c
+File6=modules\input-output\buzzer.c
+File7=modules\input-output\clutchmotor.c
+File8=modules\input-output\d_signalled.c
+File9=modules\input-output\efi.c
+File10=modules\input-output\gearmotor.c
+File11=modules\input-output\sensors.c
+File12=libs\basic.c
+File13=libs\can.c
+File14=libs\dspic.c
+File15=libs\eeprom.c
+File16=modules\aac\aac.c
+[BINARIES]
+Count=0
+[IMAGES]
+Count=0
+ActiveImageIndex=-1
+[OPENED_FILES]
+Count=15
+File0=modules\gearshift.c
+File1=modules\clutch.h
+File2=modules\aac\aac.h
+File3=modules\aac\aac_defaults.h
+File4=DY_GCU.c
+File5=modules\gcu_rio.c
+File6=modules\gearshift.h
+File7=modules\enginecontrol.c
+File8=modules\input-output\efi.c
+File9=libs\can.c
+File10=modules\input-output\efi.h
+File11=modules\gcu_rio.h
+File12=modules\clutch.c
+File13=modules\aac\aac.c
+File14=modules\input-output\d_signalled.h
+[EEPROM]
+Count=0
+[ACTIVE_COMMENTS_FILES]
+Count=0
+[OTHER_FILES]
+Count=0
+[SEARCH_PATH]
+Count=17
+Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\Defs\
+Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
+Path2=C:\Users\Salvatore\Desktop\git Repo\GCU\
+Path3=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\
+Path4=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\
+Path5=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\
+Path6=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\input-output\
+Path7=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\libs\
+Path8=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\aac\
+Path9=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\
+Path10=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\input-output\
+Path11=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\libs\
+Path12=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\aac\
+Path13=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\
+Path14=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\input-output\
+Path15=C:\Users\Salvatore\Desktop\git Repo\GCU\libs\
+Path16=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\aac\
+[HEADER_PATH]
+Count=8
+Path0=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\libs\
+Path1=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\
+Path2=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\aac\
+Path3=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\input-output\
+Path4=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\
+Path5=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\input-output\
+Path6=C:\Users\Salvatore\Desktop\git Repo\GCU\libs\
+Path7=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\aac\
+[HEADERS]
+Count=0
+[PLDS]
+Count=0
+[Useses]
+Count=62
+File0=ADC
+File1=BitReverseComplex
+File2=Button
+File3=CAN
+File4=CAN_SPI
+File5=Compact_Flash
+File6=Compact_Flash_FAT16
+File7=Conversions
+File8=C_Math
+File9=C_Stdlib
+File10=C_String
+File11=C_Type
+File12=EEPROM
+File13=EPSON_S1D13700
+File14=FFT
+File15=FirRadix
+File16=FLASH
+File17=Glcd
+File18=Glcd_Fonts
+File19=I2C
+File20=IirRadix
+File21=Keypad4x4
+File22=Lcd
+File23=Lcd_Constants
+File24=Manchester
+File25=Matrices
+File26=MemManager
+File27=Mmc
+File28=Mmc_FAT16
+File29=Mmc_Fat16_Config
+File30=One_Wire
+File31=Port_Expander
+File32=PrintOut
+File33=PS2
+File34=PWM
+File35=Q15
+File36=RS485
+File37=Setjmp
+File38=Software_I2C
+File39=Software_SPI
+File40=Software_UART
+File41=Sound
+File42=SPI
+File43=SPI_Ethernet
+File44=SPI_Ethernet_24j600
+File45=SPI_Glcd
+File46=SPI_Lcd
+File47=SPI_Lcd8
+File48=SPI_T6963C
+File49=Sprintf
+File50=Sprinti
+File51=Sprintl
+File52=T6963C
+File53=TFT
+File54=TFT_Defs
+File55=TFT_TouchPanel
+File56=Time
+File57=TouchPanel
+File58=Trigonometry
+File59=TwiddleFactors
+File60=UART
+File61=Vectors
+[EXPANDED NODES]
+Node1=Sources
+Count=1

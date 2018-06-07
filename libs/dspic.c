@@ -140,22 +140,23 @@ void setTimer(unsigned char device, double timePeriod) {
     prescalerIndex = getTimerPrescaler(timePeriod);
     switch (device) {
         case TIMER1_DEVICE:
-            TIMER1_PRESCALER = prescalerIndex;
             TIMER1_PERIOD = getTimerPeriod(timePeriod, prescalerIndex);
             TIMER1_ENABLE_INTERRUPT = TRUE;
-            TIMER1_ENABLE = TRUE;
+            T1CON = 0x8004;
+            //TIMER1_ENABLE = TRUE;
+            //TIMER1_PRESCALER = prescalerIndex;
             break;
         case TIMER2_DEVICE:
-            TIMER2_PRESCALER = prescalerIndex;
             TIMER2_PERIOD = getTimerPeriod(timePeriod, prescalerIndex);
             TIMER2_ENABLE_INTERRUPT = TRUE;
             TIMER2_ENABLE = TRUE;
+            TIMER2_PRESCALER = prescalerIndex;
             break;
         case TIMER4_DEVICE:
-            TIMER4_PRESCALER = prescalerIndex;
             TIMER4_PERIOD = getTimerPeriod(timePeriod, prescalerIndex);
             TIMER4_ENABLE_INTERRUPT = TRUE;
             TIMER4_ENABLE = TRUE;
+            TIMER4_PRESCALER = prescalerIndex;
             break;
     }
 }
@@ -210,7 +211,7 @@ unsigned char getTimerPrescaler(double timePeriod) {
     unsigned char i;
     double exactTimerPrescaler;
     exactTimerPrescaler = getExactTimerPrescaler(timePeriod);
-    for (i = 0; i < sizeof(PRESCALER_VALUES); i += 1) {
+    for (i = 0; i < sizeof(PRESCALER_VALUES) / 2; i += 1) {
         if ((int) exactTimerPrescaler < PRESCALER_VALUES[i]) {
             return i;
         }

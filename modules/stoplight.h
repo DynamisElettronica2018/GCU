@@ -11,7 +11,7 @@
 #include "dspic.h"
 
 #define STOPLIGHT_CTRL_Pin   LATD6_bit
-#define STOPLIGHT_PWM_PERCENTAGE 85
+#define STOPLIGHT_PWM_PERCENTAGE 95
 
 
 void StopLight_init(void);

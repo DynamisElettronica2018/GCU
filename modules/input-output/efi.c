@@ -1,6 +1,5 @@
-//
-// Created by Aaron Russo on 01/08/16.
-//
+
+
 
 #include "efi.h"
 
@@ -37,3 +36,21 @@ void Efi_setRPMLimiter(void){
 void Efi_unsetRPMLimiter(void){
     RPM_LIMITER_Pin = UNSET_RPM_LIMITER;
 }
+
+/*void Efi_setRPMLimiter_CAN(unsigned int limit){
+    Can_resetWritePacket();
+    Can_addIntToWritePacket((unsigned int)CAN_COMMAND_GCU_IS_ALIVE);
+    Can_addIntToWritePacket((unsigned int)(Clutch_get() | 0 ));
+    Can_addIntToWritePacket(0);
+    Can_addIntToWritePacket(0);
+    Can_write(GCU_CLUTCH_ID);
+}
+
+void Efi_unsetRPMLimiter_CAN(unsigned int limit){
+    Can_resetWritePacket();
+    Can_addIntToWritePacket((unsigned int)CAN_COMMAND_GCU_IS_ALIVE);
+    Can_addIntToWritePacket((unsigned int)(Clutch_get() | 0 ));
+    Can_addIntToWritePacket(0);
+    Can_addIntToWritePacket(0);
+    Can_write(GCU_CLUTCH_ID);
+}*/

@@ -6,6 +6,7 @@
 #define DP8_DISPLAY_CONTROLLER_CAN_H
 
 #include "d_signalled.h"
+#include "d_can.h"
 
 #define CAN_RETRY_LIMIT 5 //50
 #define CAN_DEFAULT_FLAGS _CAN_TX_STD_FRAME & _CAN_TX_NO_RTR_FRAME

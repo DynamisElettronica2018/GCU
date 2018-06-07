@@ -231,10 +231,11 @@ void GearShift_nextStep_A(void) {
             break;
             //////////////////////////////////////////////////////////
         case STEP_DOWN_START:
-            if (gearShift_isSettingNeutral) {
+            if (gearShift_isSettingNeutral  && Clutch_get() <= 80) {
                 Clutch_set(80);
             } else {
-                if (!gearShift_isUnsettingNeutral) {
+//                if (!gearShift_isUnsettingNeutral) {
+                if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60) {
                     Clutch_set(60);
                 }
                 Efi_setBlip();
@@ -257,7 +258,8 @@ void GearShift_nextStep_A(void) {
             GearShift_setMsTicks_A(Gearshift_get_time(STEP_DOWN_REBOUND));
             break;
         case STEP_DOWN_BRAKE:
-            Clutch_release();
+            if (Clutch_get() <= 81)
+                Clutch_release();
             GearShift_brake();
             GearShift_setNextStep_A(STEP_DOWN_END);
             GearShift_setMsTicks_A(Gearshift_get_time(STEP_DOWN_BRAKE));

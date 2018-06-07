@@ -8,12 +8,20 @@
 #include "basic.h"
 #include "dspic.h"
 
-#define GEARMOTOR_IN1_Pin   LATC1_bit
-#define GEARMOTOR_IN2_Pin   LATB0_bit
-#define GEARMOTOR_INH_Pin   LATB1_bit
-#define GEARMOTOR_IN1_Direction TRISC1_bit
-#define GEARMOTOR_IN2_Direction TRISB0_bit
-#define GEARMOTOR_INH_Direction TRISB1_bit
+#define GEARMOTOR_IN2_Pin        LATC1_bit
+#define GEARMOTOR_IN2_Direction  TRISC1_bit
+
+#define GEARMOTOR_IN1_Pin        LATB0_bit
+#define GEARMOTOR_IN1_Direction  TRISB0_bit
+/*
+#define GEARMOTOR_IN1_Pin        LATC1_bit
+#define GEARMOTOR_IN1_Direction  TRISC1_bit
+
+#define GEARMOTOR_IN2_Pin        LATB0_bit
+#define GEARMOTOR_IN2_Direction  TRISB0_bit
+//*/
+#define GEARMOTOR_INH_Pin        LATB1_bit
+#define GEARMOTOR_INH_Direction  TRISB1_bit
 
 void GearMotor_init(void);
 

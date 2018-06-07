@@ -34,4 +34,8 @@ void Efi_setRPMLimiter(void);
 
 void Efi_unsetRPMLimiter(void);
 
+void Efi_setRPMLimiter_CAN(unsigned int limit);
+
+void Efi_unsetRPMLimiter_CAN(unsigned int limit);
+
 #endif //FIRMWARE_EFI_H

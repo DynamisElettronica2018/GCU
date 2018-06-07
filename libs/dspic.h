@@ -7,10 +7,11 @@
 
 #include "basic.h"
 
-#ifndef OSC_FREQ_MHZ
+#define OSC_FREQ_MHZ 80
+/*#ifndef OSC_FREQ_MHZ
 #define OSC_FREQ_MHZ 32
 #endif
-
+//*/
 //@General defines
 #define OUTPUT 0
 #define INPUT 1
