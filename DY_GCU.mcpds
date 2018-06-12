@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=DY_GCU.c
+Value=modules\input-output\clutchmotor.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -40,22 +40,21 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=15
+Count=14
 File0=modules\gearshift.c
 File1=modules\clutch.h
 File2=modules\aac\aac.h
 File3=modules\aac\aac_defaults.h
 File4=DY_GCU.c
-File5=modules\gcu_rio.c
-File6=modules\gearshift.h
-File7=modules\enginecontrol.c
-File8=modules\input-output\efi.c
-File9=libs\can.c
-File10=modules\input-output\efi.h
-File11=modules\gcu_rio.h
-File12=modules\clutch.c
-File13=modules\aac\aac.c
-File14=modules\input-output\d_signalled.h
+File5=modules\gearshift.h
+File6=modules\enginecontrol.c
+File7=modules\input-output\efi.c
+File8=libs\can.c
+File9=modules\input-output\efi.h
+File10=modules\clutch.c
+File11=modules\aac\aac.c
+File12=modules\input-output\d_signalled.h
+File13=modules\input-output\clutchmotor.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -64,7 +63,7 @@ Count=0
 Count=0
 [SEARCH_PATH]
 Count=17
-Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\Defs\
+Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
 Path2=C:\Users\Salvatore\Desktop\git Repo\GCU\
 Path3=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\
@@ -92,7 +91,25 @@ Path5=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\input-output\
 Path6=C:\Users\Salvatore\Desktop\git Repo\GCU\libs\
 Path7=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\aac\
 [HEADERS]
-Count=0
+Count=18
+File0=modules\clutch.h
+File1=modules\enginecontrol.h
+File2=modules\gcu_rio.h
+File3=modules\gearshift.h
+File4=modules\stoplight.h
+File5=modules\input-output\buzzer.h
+File6=modules\input-output\clutchmotor.h
+File7=modules\input-output\d_signalled.h
+File8=modules\input-output\efi.h
+File9=modules\input-output\gearmotor.h
+File10=modules\input-output\sensors.h
+File11=modules\aac\aac.h
+File12=modules\aac\aac_defaults.h
+File13=libs\basic.h
+File14=libs\can.h
+File15=libs\d_can.h
+File16=libs\dspic.h
+File17=libs\eeprom.h
 [PLDS]
 Count=0
 [Useses]
@@ -161,4 +178,5 @@ File60=UART
 File61=Vectors
 [EXPANDED NODES]
 Node1=Sources
-Count=1
+Node2=Header Files
+Count=2

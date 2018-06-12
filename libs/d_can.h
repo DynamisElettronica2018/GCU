@@ -1,73 +1,107 @@
-//
-// Created by Aaron Russo on 03/07/16.
-//
-
-#ifndef DP8_DISPLAY_CONTROLLER_DD_CAN_H
-#define DP8_DISPLAY_CONTROLLER_DD_CAN_H
-
-#include "can.h"
-
-/*
-                MASCHERE RICEZIONE
-SW     xx1xxxxxxxx     da EFI pi˘ SW_RIO_GEAR_BRK_STEER_ID mandato da rio
-       110xxxxxx1x     dagli altri
-
-GCU    xx1xxxxxxxx     RXB0     da EFI pi˘ SW_RIO_GEAR_BRK_STEER_ID mandato da entrambi
-       110xxxxx0xx     RXB1     dagli altri
-
-EBB    x1x0x001101     RXB0     batteria ed ebbtarget
-       10100000000     RXB1     brake
-
-IMPLEMENTARE CANerror, che livello di complessit‡? quali errori?
-
-*/
-
-#define SW_RIO_GEAR_BRK_STEER_ID      0b10100000000 //1280
-#define RIO_IR_PITOT_CL_ID    0b11001111011 //dec 1659
-#define RIO_SOSP_ID           0b10100000001 //dec 1281
-#define RIO_AUX_ID            0b11011101011 //dec 1771
-
-#define GCU_SENSE_ID          0b11011001110 //dec 1742
-#define GCU_CLUTCH_ID         0b11000010111 //dec 1559
-#define GCU_MOTOR_ID          0b11000110110 //dec 1590
-#define GCU_KILL_ID           0b11010001110 //dec 1678
-#define GCU_AUX_ID            0b11011011110 //dec 1758
-
-#define SW_CLUTCH_ID          0b11000000001 //dec 1537
-#define SW_FIRE_ID            0b11011000000 //dec 1728
-#define SW_EBB_ID             0b11001001101 //dec 1613
-#define SW_LAUNCH_ID          0b11010011001 //dec 1689
-#define SW_COMMAND_ID         0b11010101100 //dec 1708
-#define SW_AUX_ID             0b11011110000 //dec 1776
-
-#define EBB_ID                0b11001100110 //dec 1638
-#define EBB_AUX_ID            0b11011111010 //dec 1786
-
-#define EFI_HALL_ID           0b01100000111 //dec 775
-#define EFI_GEAR_ID           0b01100001000 //dec 776
-#define EFI_APPS_TPS_ID       0b01100001001 //dec 777
-#define EFI_MAP_LAMBDA_ID     0b01100001010 //dec 778
-#define EFI_FUEL_RPM_ID       0b01100001011 //dec 779
-#define EFI_FAULT_DIAG_ID     0b01100001100 //dec 780
-#define EFI_OIL_BATT_ID       0b01100001101 //dec 781
-#define EFI_H2O_ID            0b01100001110 //dec 782
-#define EFI_MIXED_ID          0b01100001111 //dec 783
-
-#define LAP_ID                0b11000100110 //dec 1574
-#define LAP_AUX_ID            0b11011010010 //dec 1746
-
-#define CAN_ID_TIMES      0b11100001000        //1800
-#define CAN_ID_AAC        0b11100001111        //1807
-#define CAN_ID_DATA_1     0b11100001001        //1801    //dati da EFI forward to rio (H2O)
-#define CAN_ID_DATA_2     0b11100001101        //1805    //dati da EFI forward to rio (Oil and Battery)
-#define CAN_ID_DATA_3     0b11100001110        //1806    //dati da EFI forward to rio (Fan and Fuel)
 
 
-#define CAN_COMMAND_GCU_IS_ALIVE                99
-#define CAN_COMMAND_CHANGE_SHIFT_TIMING         100
-#define CAN_COMMAND_SAVE_SHIFT_TIMINGS          101
-#define CAN_COMMAND_CONFIRM_SHIFT_TIMING_CHANGE 102
-#define CAN_COMMAND_CONFIRM_SHIFT_TIMING_SAVE   103
+#ifndef DD_CAN_H
+#define DD_CAN_H
+
+/************************** EFI ***************************/
+#define EFI_HALL_ID                     0b01100000100 //772
+#define EFI_WATER_TEMPERATURE_ID        0b01100001100 //780
+#define EFI_OIL_T_ENGINE_BAT_ID         0b01100001101 //781
+#define EFI_GEAR_RPM_TPS_APPS_ID        0b01100000101 //773
+#define EFI_TRACTION_CONTROL_ID         0b01100000110 //774
+#define EFI_FUEL_FAN_H2O_LAUNCH_ID      0b01100001110 //782
+#define EFI_PRESSURES_LAMBDA_SMOT_ID    0b01100000111 //775
+#define EFI_DIAG_IGN_EXHAUST_ID         0b01100001111 //783
 
 
-#endif //DP8_DISPLAY_CONTROLLER_DD_CAN_H
+/************************** GCU ***************************/
+#define GCU_TRACTION_CONTROL_EFI_ID     0b10100000000 //1280       MANDATO SOLO DA GCU AD EFI!!!!
+#define GCU_LAUNCH_CONTROL_EFI_ID       0b10100000001 //1281       MANDATO SOLO DA GCU AD EFI!!!!
+#define GCU_CLUTCH_FB_SW_ID             0b01100010000 //784
+#define GCU_GEAR_TIMING_TELEMETRY_ID    0b11100001101 //1624
+
+
+/********************* STEERING WHEEL *********************/
+#define SW_FIRE_GCU_ID                  0b01000000100 //516
+#define SW_GEARSHIFT_ID                 0b01000000000 //512
+#define SW_CLUTCH_TARGET_GCU_ID         0b01000000001 //513
+#define SW_LAUNCH_CONTROL_GCU_ID        0b01000000010 //514
+#define SW_TRACTION_CONTROL_GCU_ID      0b01000000011 //515
+#define SW_BRAKE_BIAS_EBB_ID            0b10000000000 //1024
+#define SW_DRS_GCU_ID                   0b01000000101 //517
+
+
+/************************** DCU ***************************/
+#define DCU_GEAR_TIMING_GCU_ID          0b01000000110 //518
+#define DCU_AUTO_GEARSHIFT_GCU_ID       0b01000000111 //519
+
+
+/************************** DAU ***************************/
+#define DAU_FR_ID                       0b11001010000 //1616
+#define DAU_FL_ID                       0b11001010001 //1617
+#define DAU_REAR_ID                     0b11001010010 //1618
+#define DAU_FR_APPS_ID                  0b11001010011 //1619
+#define IR_FL_ID                        0b11001010100 //1620
+#define IR_FR_ID                        0b11001010101 //1621
+#define IR_RL_ID                        0b11001010110 //1622
+#define IR_RR_ID                        0b11001010111 //1623
+
+
+/************************** IMU ***************************/
+#define IMU_DATA_1_ID                   0b11100001010 //1802
+#define IMU_DATA_2_ID                   0b11100001011 //1803
+#define IMU_DATA_3_ID                   0b11100001100 //1804
+
+
+/************************** EBB ***************************/
+#define EBB_BIAS_ID                     0b11100001101 //1805
+
+
+/************************* DEBUG **************************/
+#define DAU_FR_DEBUG_ID                 0b01100010001 //785
+#define DAU_FL_DEBUG_ID                 0b01100010010 //786
+#define DAU_REAR_DEBUG_ID               0b01100010011 //787
+#define SW_DEBUG_ID                     0b01100010100 //788
+#define EBB_DEBUG_ID                    0b01100010101 //789
+#define GCU_DEBUG_1_ID                  0b01100010110 //790
+#define GCU_DEBUG_2_ID                  0b01100010111 //791
+#define DCU_DEBUG_ID                    0b01100011000 //792
+
+
+/************************** AUX ***************************/
+#define SW_AUX_ID                       0b11111110000 //2032
+#define GCU_AUX_ID                      0b11111110001 //2033
+#define EBB_AUX_ID                      0b11111110010 //2034
+#define DAU_FR_AUX_ID                   0b11111110011 //2035
+#define DAU_FL_AUX_ID                   0b11111110100 //2036
+#define DAU_REAR_AUX_ID                 0b11111110101 //2037
+#define IMU_AUX_ID                      0b11111110110 //2038
+#define DCU_AUX_ID                      0b11111110111 //2039
+
+
+/******************* MASKS & FILTERS **********************/
+//MASK
+#define SW_MASK_EFI_DEBUG_IMU_EBB		0b11111100000 
+//FILTERS
+#define SW_FILTER_EFI_DEBUG				0b01100000000
+#define SW_FILTER_IMU_EBB				0b11100000000
+
+//MASK
+#define GCU_MASK_EFI_SW_EBB				0b11111110100
+//FILTERS
+#define GCU_FILTER_EFI					0b01100000100
+#define GCU_FILTER_SW_DCU				0b01000000000
+
+//MASK
+#define ALL_MASK_AUX					0b11111110000
+//FILTER
+#define ALL_FILTER_AUX					0b11111110000
+
+//MASK
+#define EBB_MASK_SW_DAUFR				0b11111111111
+//FILTERS
+#define EBB_FILTER_SW					0b10000000000
+#define EBB_FILTER_DAUFR				0b11001010000
+
+
+#endif //DD_CAN_H

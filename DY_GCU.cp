@@ -375,7 +375,6 @@ void StopLight_init(void);
 void StopLight_setupPWM(void);
 
 void StopLight_setBrightness(unsigned char percentage);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/gcu_rio.h"
 #line 23 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;

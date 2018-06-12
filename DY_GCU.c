@@ -1,5 +1,5 @@
 /*
- * Software GCU DP9
+ * Software GCU DPX
 */
 
 
@@ -16,7 +16,7 @@
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
-#include "gcu_rio.h"
+//#include "gcu_rio.h"
 //#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
 //*/
 
@@ -37,9 +37,11 @@ char isSteeringWheelAvailable;
   int timer1_aac_counter = 0;
 #endif
 
+/*
 //variables to send data from efi to rio
 extern int rio_efiData[RIO_NUM_EFI_DATA];
 extern int timer1_rioEfiCounter;
+*/
 
 unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
 extern unsigned int gearShift_currentGear;
