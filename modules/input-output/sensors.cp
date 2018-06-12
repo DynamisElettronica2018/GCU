@@ -1,8 +1,7 @@
 #line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU/modules/input-output/sensors.c"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/sensors.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
 #line 16 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
@@ -12,8 +11,6 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
 #line 177 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
 void setAllPinAsDigital(void);
 
@@ -72,48 +69,6 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 26 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
-void dSignalLed_init(void);
-
-void dSignalLed_switch(unsigned char led);
-
-void dSignalLed_set(unsigned char led);
-
-void dSignalLed_unset(unsigned char led);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
-#line 60 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
-void Can_init(void);
-
-void Can_read(unsigned long int *id, char dataBuffer[], unsigned int *dataLength, unsigned int *inFlags);
-
-void Can_writeByte(unsigned long int id, unsigned char dataOut);
-
-void Can_writeInt(unsigned long int id, int dataOut);
-
-void Can_addIntToWritePacket(int dataOut);
-
-void Can_addByteToWritePacket(unsigned char dataOut);
-
-unsigned int Can_write(unsigned long int id);
-
-void Can_setWritePriority(unsigned int txPriority);
-
-void Can_resetWritePacket(void);
-
-unsigned int Can_getWriteFlags(void);
-
-unsigned char Can_B0hasBeenReceived(void);
-
-unsigned char Can_B1hasBeenReceived(void);
-
-void Can_clearB0Flag(void);
-
-void Can_clearB1Flag(void);
-
-void Can_clearInterrupt(void);
-
-void Can_initInterrupt(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
 #line 22 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/sensors.h"
 void Sensors_init(void);
 
@@ -164,7 +119,7 @@ void Sensors_send(void) {
  Can_addIntToWritePacket(sensors_fuelPumpCurrent);
  Can_addIntToWritePacket(sensors_GCUTemp);
  Can_addIntToWritePacket(sensors_H2OPumpCurrent);
- Can_write( 0b11011001110 );
+ Can_write(GCU_SENSE_ID);
 }
 
 void Sensors_tick(void) {

@@ -87,7 +87,7 @@ void aac_sendTimes(void)
         Can_addIntToWritePacket(CODE_SET_AAC);
         Can_addIntToWritePacket(aac_timesCounter);
         Can_addIntToWritePacket(aac_parameters[aac_timesCounter]);
-        if(Can_write(CAN_ID_TIMES) < 0)
+        if(Can_write(GCU_GEAR_TIMING_TELEMETRY_ID) < 0)
             Buzzer_Bip();
         aac_timesCounter -= 1;
         if(!aac_sendingAll || aac_timesCounter < 0){

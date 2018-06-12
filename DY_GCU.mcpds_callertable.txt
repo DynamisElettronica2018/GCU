@@ -60,17 +60,6 @@ main
 		Buzzer_init
 			setTimer
 			setInterruptPriority
-		Sensors_init
-			setupAnalogSampling
-				getMinimumAnalogClockConversion
-				setAutomaticSampling
-				setAnalogVoltageReference
-				unsetAnalogInterrupt
-					clearAnalogInterrupt
-				startSampling
-			setAnalogPIN
-			turnOnAnalogModule
-		rio_init
 		setTimer
 		setInterruptPriority
 	Buzzer_Bip
@@ -90,14 +79,6 @@ CAN_Interrupt
 	GearShift_injectCommand
 		GearShift_setNeutral
 			GearShift_down
-				Can_writeInt
-					Can_resetWritePacket
-					Can_addIntToWritePacket
-						Can_addByteToWritePacket
-					Can_write
-						CAN1Write
-							CAN1IDToRegs
-						Can_getWriteFlags
 				GearShift_isShifting
 				GearShift_setNextStep_A
 				GearShift_nextStep_A
@@ -114,13 +95,11 @@ CAN_Interrupt
 						Clutch_set
 					GearMotor_release
 					GearMotor_brake
-					Can_writeInt
 					Clutch_get
 					Efi_setBlip
 					Efi_unsetBlip
 					GearMotor_turnLeft
 			GearShift_up
-				Can_writeInt
 				GearShift_isShifting
 				GearShift_setNextStep_A
 				GearShift_nextStep_A
@@ -129,10 +108,9 @@ CAN_Interrupt
 			GearShift_down
 		Efi_setRPMLimiter
 		Efi_unsetRPMLimiter
+	Buzzer_Bip
 	Clutch_setBiased
 		Clutch_set
-	rio_sendOneTime
-	rio_sendAllTimes
 timer4_interrupt
 	Buzzer_tick
 timer2_interrupt
@@ -140,50 +118,15 @@ timer1_interrupt
 	GearShift_msTick
 		GearShift_nextStep_A
 		GearShift_nextStep_B
-	Sensors_tick
-		Sensors_read
-			getAnalogValue
-			Sensors_sampleFanCurrent
-				_Long2Float
-				_Mul_FP
-				_AddSub_FP
-				_Float2Longint
-			Sensors_sampleH2OPumpCurrent
-				_Long2Float
-				_Mul_FP
-				_AddSub_FP
-				_Float2Longint
-			Sensors_sampleFuelPumpCurrent
-				_Long2Float
-				_Mul_FP
-				_AddSub_FP
-				_Float2Longint
-			Sensors_sampleGCUTemp
-				_Long2Float
-				_Mul_FP
-				_AddSub_FP
-				_Float2Longint
-		Sensors_nextPin
-			unsetAnalogPIN
-			setAnalogPIN
 	EngineControl_isStarting
 	EngineControl_stop
 	GCU_isAlive
 		Can_resetWritePacket
 		Can_addIntToWritePacket
+			Can_addByteToWritePacket
 		Clutch_get
 		Can_write
+			CAN1Write
+				CAN1IDToRegs
+			Can_getWriteFlags
 	dSignalLed_switch
-	Sensors_send
-		Can_resetWritePacket
-		Can_addIntToWritePacket
-		Can_write
-	rio_sendTimes
-		Can_resetWritePacket
-		Can_addIntToWritePacket
-		Can_write
-		Buzzer_Bip
-	rio_send
-		Can_resetWritePacket
-		Can_addIntToWritePacket
-		Can_write

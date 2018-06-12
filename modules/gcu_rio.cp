@@ -80,7 +80,6 @@ void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
 #line 60 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
 void Can_init(void);
 
@@ -202,7 +201,7 @@ int rio_efiData[ DATA_LAST ];
 int rio_canId;
 
 void rio_init(void){
- rio_canId =  0b11100001001 ;
+ rio_canId = CAN_ID_DATA_1;
 }
 
 void rio_sendOneTime(time_id pos){
@@ -216,7 +215,7 @@ void rio_sendTimes(void)
  Can_addIntToWritePacket( 0 );
  Can_addIntToWritePacket(rio_timesCounter);
  Can_addIntToWritePacket(gearShift_timings[rio_timesCounter]);
- if(Can_write( 0b11100001000 ) < 0)
+ if(Can_write(CAN_ID_TIMES) < 0)
  Buzzer_Bip();
  rio_timesCounter -= 1;
  if(!rio_sendingAll || rio_timesCounter < 0){
@@ -236,32 +235,32 @@ void rio_sendAllTimes(void)
 
 void rio_send(void){
  switch(rio_canId){
- case  0b11100001001 :
+ case CAN_ID_DATA_1:
  Can_resetWritePacket();
  Can_addIntToWritePacket(rio_efiData[H2O_DC]);
  Can_addIntToWritePacket(rio_efiData[TH2O_ENGINE]);
  Can_addIntToWritePacket(rio_efiData[TH2O_IN]);
  Can_addIntToWritePacket(rio_efiData[TH2O_OUT]);
  Can_write(rio_canId);
- rio_canId =  0b11100001101 ;
+ rio_canId = CAN_ID_DATA_2;
  break;
- case  0b11100001101 :
+ case CAN_ID_DATA_2:
  Can_resetWritePacket();
  Can_addIntToWritePacket(rio_efiData[POIL]);
  Can_addIntToWritePacket(rio_efiData[TOIL_IN]);
  Can_addIntToWritePacket(rio_efiData[TOIL_OUT]);
  Can_addIntToWritePacket(rio_efiData[BATTERY]);
  Can_write(rio_canId);
- rio_canId =  0b11100001110 ;
+ rio_canId = CAN_ID_DATA_3;
  break;
- case  0b11100001110 :
+ case CAN_ID_DATA_3:
  Can_resetWritePacket();
  Can_addIntToWritePacket(rio_efiData[P_FUEL]);
  Can_addIntToWritePacket(rio_efiData[FAN]);
  Can_addIntToWritePacket(rio_efiData[INJ1]);
  Can_addIntToWritePacket(rio_efiData[INJ2]);
  Can_write(rio_canId);
- rio_canId =  0b11100001001 ;
+ rio_canId = CAN_ID_DATA_1;
  break;
  }
 }

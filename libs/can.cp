@@ -79,7 +79,6 @@ void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
 #line 60 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
 void Can_init(void);
 
@@ -129,13 +128,10 @@ void Can_init() {
  CAN1Initialize(2, 4, 3, 4, 2, Can_Init_flags);
  CAN1SetOperationMode(_CAN_MODE_CONFIG, 0xFF);
 #line 53 "C:/Users/Salvatore/Desktop/git Repo/GCU/libs/can.c"
- CAN1SetMask(_CAN_MASK_B1, 0, _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
- CAN1SetFilter(_CAN_FILTER_B1_F1, 0, _CAN_CONFIG_STD_MSG);
- CAN1SetFilter(_CAN_FILTER_B1_F2, 0, _CAN_CONFIG_STD_MSG);
-
- CAN1SetMask(_CAN_MASK_B2, 0, _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
- CAN1SetFilter(_CAN_FILTER_B2_F1, 0, _CAN_CONFIG_STD_MSG);
-
+ CAN1SetMask(_CAN_MASK_B1,  0b11111110100 , _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
+ CAN1SetFilter(_CAN_FILTER_B1_F1,  0b01100000100 , _CAN_CONFIG_STD_MSG);
+ CAN1SetFilter(_CAN_FILTER_B1_F2,  0b01000000000 , _CAN_CONFIG_STD_MSG);
+#line 60 "C:/Users/Salvatore/Desktop/git Repo/GCU/libs/can.c"
  CAN1SetOperationMode(_CAN_MODE_NORMAL, 0xFF);
 
  Delay_ms(250);

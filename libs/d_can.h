@@ -1,5 +1,3 @@
-
-
 #ifndef DD_CAN_H
 #define DD_CAN_H
 
@@ -14,11 +12,18 @@
 #define EFI_DIAG_IGN_EXHAUST_ID         0b01100001111 //783
 
 
-/************************** GCU ***************************/
+/************************ GCU *****************************/
 #define GCU_TRACTION_CONTROL_EFI_ID     0b10100000000 //1280       MANDATO SOLO DA GCU AD EFI!!!!
 #define GCU_LAUNCH_CONTROL_EFI_ID       0b10100000001 //1281       MANDATO SOLO DA GCU AD EFI!!!!
 #define GCU_CLUTCH_FB_SW_ID             0b01100010000 //784
 #define GCU_GEAR_TIMING_TELEMETRY_ID    0b11100001101 //1624
+
+/***** COMANDI GCU ****/
+#define CAN_COMMAND_GCU_IS_ALIVE                99
+#define CAN_COMMAND_CHANGE_SHIFT_TIMING         100
+#define CAN_COMMAND_SAVE_SHIFT_TIMINGS          101
+#define CAN_COMMAND_CONFIRM_SHIFT_TIMING_CHANGE 102
+#define CAN_COMMAND_CONFIRM_SHIFT_TIMING_SAVE   103
 
 
 /********************* STEERING WHEEL *********************/

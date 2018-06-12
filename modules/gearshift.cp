@@ -131,6 +131,7 @@ unsigned char Clutch_get(void);
 
 void Clutch_setBiased(unsigned char value);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/gcu_rio.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
@@ -176,8 +177,6 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/gcu_rio.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/buzzer.h"
 #line 41 "c:/users/salvatore/desktop/git repo/gcu/modules/gcu_rio.h"
 typedef enum {
@@ -365,7 +364,7 @@ void GearShift_setNeutral(unsigned int command) {
 }
 
 void GearShift_up(void) {
- Can_writeInt( 0b11000010111 , 3);
+
  if (!GearShift_isShifting()) {
  gearShift_isShiftingUp =  1 ;
  GearShift_setNextStep_A(STEP_UP_START);
@@ -374,7 +373,7 @@ void GearShift_up(void) {
 }
 
 void GearShift_down(void) {
- Can_writeInt( 0b11000010111 , 4);
+
  if (!GearShift_isShifting()) {
  gearShift_isShiftingDown =  1 ;
  GearShift_setNextStep_A(STEP_DOWN_START);
@@ -439,7 +438,7 @@ void GearShift_nextStep_A(void) {
  gearShift_isShiftingUp =  0 ;
  gearShift_isSettingNeutral =  0 ;
  gearShift_isUnsettingNeutral =  0 ;
- Can_writeInt( 0b11000010111 , 33);
+
  break;
 
  case STEP_DOWN_START:
@@ -481,7 +480,7 @@ void GearShift_nextStep_A(void) {
  gearShift_isShiftingDown =  0 ;
  gearShift_isSettingNeutral =  0 ;
  gearShift_isUnsettingNeutral =  0 ;
- Can_writeInt( 0b11000010111 , 22);
+
  break;
  default:
  break;

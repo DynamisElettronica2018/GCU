@@ -134,6 +134,7 @@ void Buzzer_tick(void);
 void Buzzer_Bip(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/clutch.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/gcu_rio.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
@@ -179,8 +180,6 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/gcu_rio.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/buzzer.h"
 #line 41 "c:/users/salvatore/desktop/git repo/gcu/modules/gcu_rio.h"
 typedef enum {
@@ -400,7 +399,7 @@ void aac_execute(void){
  case START:
  Efi_setRPMLimiter();
 
- Can_writeByte( 0b11011110000 , MEX_READY);
+ Can_writeByte( 0b11111110000 , MEX_READY);
  aac_currentState = READY;
  aac_clutchValue = 100;
  Clutch_set((unsigned int)aac_clutchValue);
@@ -443,7 +442,7 @@ void aac_execute(void){
  return;
  case STOPPING:
  aac_currentState = OFF;
- Can_writeByte( 0b11011110000 , MEX_OFF);
+ Can_writeByte( 0b11111110000 , MEX_OFF);
  return;
 
  default: return;
@@ -461,7 +460,7 @@ void aac_sendTimes(void)
  Can_addIntToWritePacket( 2 );
  Can_addIntToWritePacket(aac_timesCounter);
  Can_addIntToWritePacket(aac_parameters[aac_timesCounter]);
- if(Can_write( 0b11100001000 ) < 0)
+ if(Can_write( 0b11100001101 ) < 0)
  Buzzer_Bip();
  aac_timesCounter -= 1;
  if(!aac_sendingAll || aac_timesCounter < 0){

@@ -99,7 +99,7 @@ void main() {
 onTimer1Interrupt{
     clearTimer1();
     GearShift_msTick();
-    Sensors_tick();
+    //Sensors_tick();
     timer1_counter0 += 1;
     timer1_counter1 += 1;
     timer1_counter2 += 1;

@@ -28,7 +28,7 @@ L_aac_execute2:
 	CALL	_Efi_setRPMLimiter
 ;aac.c,29 :: 		Can_writeByte(SW_AUX_ID, MEX_READY);
 	MOV.B	#1, W12
-	MOV	#1776, W10
+	MOV	#2032, W10
 	MOV	#0, W11
 	CALL	_Can_writeByte
 ;aac.c,30 :: 		aac_currentState = READY;
@@ -212,7 +212,7 @@ L_aac_execute14:
 	MOV.B	W0, [W1]
 ;aac.c,72 :: 		Can_writeByte(SW_AUX_ID, MEX_OFF);
 	MOV.B	#3, W12
-	MOV	#1776, W10
+	MOV	#2032, W10
 	MOV	#0, W11
 	CALL	_Can_writeByte
 ;aac.c,73 :: 		return;
@@ -305,8 +305,8 @@ L__aac_sendTimes51:
 	ADD	W0, W1, W0
 	MOV	[W0], W10
 	CALL	_Can_addIntToWritePacket
-;aac.c,90 :: 		if(Can_write(CAN_ID_TIMES) < 0)
-	MOV	#1800, W10
+;aac.c,90 :: 		if(Can_write(GCU_GEAR_TIMING_TELEMETRY_ID) < 0)
+	MOV	#1805, W10
 	MOV	#0, W11
 	CALL	_Can_write
 	CP	W0, #0

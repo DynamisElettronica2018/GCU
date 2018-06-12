@@ -195,15 +195,8 @@ L_end_GearShift_setNeutral:
 _GearShift_up:
 
 ;gearshift.c,65 :: 		void GearShift_up(void) {
-;gearshift.c,66 :: 		Can_writeInt(GCU_CLUTCH_ID, 3);//Debug
-	PUSH	W10
-	PUSH	W11
-	PUSH	W12
-	MOV	#3, W12
-	MOV	#1559, W10
-	MOV	#0, W11
-	CALL	_Can_writeInt
 ;gearshift.c,67 :: 		if (!GearShift_isShifting()) {
+	PUSH	W10
 	CALL	_GearShift_isShifting
 	CP0.B	W0
 	BRA Z	L__GearShift_up116
@@ -222,8 +215,6 @@ L__GearShift_up116:
 L_GearShift_up19:
 ;gearshift.c,72 :: 		}
 L_end_GearShift_up:
-	POP	W12
-	POP	W11
 	POP	W10
 	RETURN
 ; end of _GearShift_up
@@ -231,15 +222,8 @@ L_end_GearShift_up:
 _GearShift_down:
 
 ;gearshift.c,74 :: 		void GearShift_down(void) {
-;gearshift.c,75 :: 		Can_writeInt(GCU_CLUTCH_ID, 4);//Debug
-	PUSH	W10
-	PUSH	W11
-	PUSH	W12
-	MOV	#4, W12
-	MOV	#1559, W10
-	MOV	#0, W11
-	CALL	_Can_writeInt
 ;gearshift.c,76 :: 		if (!GearShift_isShifting()) {
+	PUSH	W10
 	CALL	_GearShift_isShifting
 	CP0.B	W0
 	BRA Z	L__GearShift_down118
@@ -258,8 +242,6 @@ L__GearShift_down118:
 L_GearShift_down20:
 ;gearshift.c,81 :: 		}
 L_end_GearShift_down:
-	POP	W12
-	POP	W11
 	POP	W10
 	RETURN
 ; end of _GearShift_down
@@ -333,8 +315,6 @@ _GearShift_nextStep_A:
 ;gearshift.c,192 :: 		void GearShift_nextStep_A(void) {
 ;gearshift.c,193 :: 		switch (gearShift_nextStepValue_A) {
 	PUSH	W10
-	PUSH	W11
-	PUSH	W12
 	GOTO	L_GearShift_nextStep_A24
 ;gearshift.c,194 :: 		case STEP_UP_START:
 L_GearShift_nextStep_A26:
@@ -444,11 +424,6 @@ L_GearShift_nextStep_A34:
 	MOV	#lo_addr(_gearShift_isUnsettingNeutral), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;gearshift.c,230 :: 		Can_writeInt(GCU_CLUTCH_ID, 33);//Debug
-	MOV	#33, W12
-	MOV	#1559, W10
-	MOV	#0, W11
-	CALL	_Can_writeInt
 ;gearshift.c,231 :: 		break;
 	GOTO	L_GearShift_nextStep_A25
 ;gearshift.c,233 :: 		case STEP_DOWN_START:
@@ -587,11 +562,6 @@ L_GearShift_nextStep_A48:
 	MOV	#lo_addr(_gearShift_isUnsettingNeutral), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;gearshift.c,272 :: 		Can_writeInt(GCU_CLUTCH_ID, 22);//Debug
-	MOV	#22, W12
-	MOV	#1559, W10
-	MOV	#0, W11
-	CALL	_Can_writeInt
 ;gearshift.c,273 :: 		break;
 	GOTO	L_GearShift_nextStep_A25
 ;gearshift.c,274 :: 		default:
@@ -664,8 +634,6 @@ L__GearShift_nextStep_A145:
 L_GearShift_nextStep_A25:
 ;gearshift.c,277 :: 		}
 L_end_GearShift_nextStep_A:
-	POP	W12
-	POP	W11
 	POP	W10
 	RETURN
 ; end of _GearShift_nextStep_A

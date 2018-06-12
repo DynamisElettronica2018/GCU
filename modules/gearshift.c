@@ -63,7 +63,7 @@ void GearShift_setNeutral(unsigned int command) {
 }
 
 void GearShift_up(void) {
-    Can_writeInt(GCU_CLUTCH_ID, 3);//Debug
+    //Can_writeInt(GCU_CLUTCH_ID, 3);//Debug
     if (!GearShift_isShifting()) {
         gearShift_isShiftingUp = TRUE;
         GearShift_setNextStep_A(STEP_UP_START);
@@ -72,7 +72,7 @@ void GearShift_up(void) {
 }
 
 void GearShift_down(void) {
-    Can_writeInt(GCU_CLUTCH_ID, 4);//Debug
+    //Can_writeInt(GCU_CLUTCH_ID, 4);//Debug
     if (!GearShift_isShifting()) {
         gearShift_isShiftingDown = TRUE;
         GearShift_setNextStep_A(STEP_DOWN_START);
@@ -227,7 +227,7 @@ void GearShift_nextStep_A(void) {
             gearShift_isShiftingUp = FALSE;
             gearShift_isSettingNeutral = FALSE;
             gearShift_isUnsettingNeutral = FALSE;
-            Can_writeInt(GCU_CLUTCH_ID, 33);//Debug
+            //Can_writeInt(GCU_CLUTCH_ID, 33);//Debug
             break;
             //////////////////////////////////////////////////////////
         case STEP_DOWN_START:
@@ -269,7 +269,7 @@ void GearShift_nextStep_A(void) {
             gearShift_isShiftingDown = FALSE;
             gearShift_isSettingNeutral = FALSE;
             gearShift_isUnsettingNeutral = FALSE;
-            Can_writeInt(GCU_CLUTCH_ID, 22);//Debug
+            //Can_writeInt(GCU_CLUTCH_ID, 22);//Debug
             break;
         default:
             break;
