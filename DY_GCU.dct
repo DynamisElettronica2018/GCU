@@ -1774,6 +1774,7 @@ clutch_insert
 clutch_release
 clutch_set
 clutch_setbiased
+clutch_test
 clutchmotor_init
 clutchmotor_percentage_step
 clutchmotor_pwm_max_value
@@ -8986,6 +8987,9 @@ tec6
 tec6
 tec7
 tec7
+test_launchactive
+test_rpmlimiter
+test_targetslip
 tft_16bit_write_data
 tft_circle
 tft_color16bittorgb

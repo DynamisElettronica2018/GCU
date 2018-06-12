@@ -23,7 +23,11 @@
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-int test_targetSlip = 0;
+unsigned int test_targetSlip = 500;
+unsigned int clutch_test = 0;
+
+unsigned int test_rpmLimiter = 0;
+unsigned int test_launchActive = 0;
 
 //TODO///////
 //uncommentare il led 14 nel main e commentarlo/rimuoverl in onCanInterrupt
@@ -58,6 +62,25 @@ void GCU_isAlive(void) {
     Can_write(GCU_CLUTCH_FB_SW_ID);
 
 }
+/*//test to EFI analog sampling
+init_testSamplingToEfi()
+{
+  unsigned char sensors_pinIndex = 0;
+  setupAnalogSampling();
+  setAnalogPIN(sensors_pinIntex);
+  turnOnAnalogModule();
+}
+
+void Sensors_send(void) {
+    Can_resetWritePacket();
+    Can_addIntToWritePacket(sensors_fanCurrent);
+    Can_addIntToWritePacket(0);
+    Can_addIntToWritePacket(0);
+    Can_addIntToWritePacket(0);
+    Can_write(GCU_SENSE_ID);
+}
+//end test
+*/
 
 void init(void) {
     dSignalLed_init();
@@ -69,6 +92,7 @@ void init(void) {
     GearShift_init();
     StopLight_init();
     Buzzer_init();
+    //init_testSamplingToEfi();
     //Sensors_init();
     //rio_init();
   #ifdef AAC_H
@@ -77,6 +101,12 @@ void init(void) {
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
+    Can_addIntToWritePacket(0xFFFF);
+    Can_addIntToWritePacket(0);
+    Can_addIntToWritePacket(0);
+    Can_addIntToWritePacket(0);
+    
+    Can_write(GCU_LAUNCH_CONTROL_EFI_ID);
 }
 
 void main() {
@@ -88,6 +118,7 @@ void main() {
       //dSignalLed_switch(DSIGNAL_LED_RG14);
       Delay_ms(1000);
       bello += 1;
+      //dSignalLed_switch(DSIGNAL_LED_RG14);
     }
 }
 
@@ -122,10 +153,43 @@ onTimer1Interrupt{
         dSignalLed_switch(DSIGNAL_LED_RG14);
         //Sensors_send();
         timer1_counter2 = 0;
+
+        if (test_targetSlip == 900)
+           test_targetSlip = 500;
         test_targetSlip += 100;
         Can_resetWritePacket();
         Can_addIntToWritePacket(test_targetSlip);
+        Can_addIntToWritePacket(0);
+        Can_addIntToWritePacket(0);
+        Can_addIntToWritePacket(0);
         Can_write(GCU_TRACTION_CONTROL_EFI_ID);
+        if (test_rpmLimiter == 900)
+          test_rpmLimiter = 0;
+        test_rpmLimiter += 300;
+        /*
+        Can_resetWritePacket();
+        Can_addIntToWritePacket(test_launchActive);
+        Can_addIntToWritePacket(test_rpmLimiter);
+        */
+        /*Can_addIntToWritePacket(0);
+        Can_addIntToWritePacket(0);
+        Can_addIntToWritePacket(0);
+        Can_addIntToWritePacket(0);
+        Can_write(GCU_LAUNCH_CONTROL_EFI_ID);
+        if (test_launchActive == 0)
+          test_launchActive = 0xFFFF;
+        else if (test_launchActive = 0xFFFF)
+          test_launchActive = 0;*/
+
+        /*
+        //start clutch test servo
+        Clutch_setBiased(clutch_test);
+        if (clutch_test == 100)
+          clutch_test = 0;
+        else
+          clutch_test = 100;
+        //end test clutch servo
+        */
     }
     //*/
     if (timer1_counter3 >= 10) {
@@ -136,11 +200,14 @@ onTimer1Interrupt{
         timer1_counter3 = 0;
     }
     
+    /* RIO DELETED
+
     if (timer1_counter4 >= RIO_UPDATE_RATE_ms) {
        //dSignalLed_switch(DSIGNAL_LED_RG12);
         //rio_send();
         timer1_counter4 = 0;
     }
+    */
 
   #ifdef AAC_H
     timer1_aac_counter += 1;

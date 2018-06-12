@@ -69,7 +69,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 22 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/sensors.h"
+#line 23 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/sensors.h"
 void Sensors_init(void);
 
 void Sensors_tick(void);
@@ -140,7 +140,7 @@ void Sensors_read(void) {
  case  3 :
  Sensors_sampleFuelPumpCurrent(analogValue);
  break;
- case  2 :
+ case GCU_TEMP_Pin:
  Sensors_sampleGCUTemp(analogValue);
  break;
  default:

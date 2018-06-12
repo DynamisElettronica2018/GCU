@@ -13,11 +13,12 @@
 #define FAN_CURRENT_Pin         AN5    //Analog 0 - tot
 #define H2O_PUMP_CURRENT_Pin    AN4    //PWM
 #define FUEL_PUMP_CURRENT_Pin   AN3    //PWM
-#define GCU_TEMP_Pin            AN2    //Analog 0.1 ~ 1.75 | -40° ~ 125°
+//#define GCU_TEMP_Pin            AN2    //Analog 0.1 ~ 1.75 | -40° ~ 125°
 
 #define BRIDGE_CURRENT_1_Pin    AN11
 #define BRIDGE_CURRENT_2_Pin    AN12
-#define SERVO_CURRENT_3_Pin     AN10      //PWM //Mando il massimo da quando si è mosso
+//modificato per test invio corrente KST efi debug display
+#define SERVO_CURRENT_3_Pin     AN2      //PWM //Mando il massimo da quando si è mosso
 
 void Sensors_init(void);
 
