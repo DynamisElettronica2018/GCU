@@ -23,6 +23,7 @@
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
+int test_targetSlip = 0;
 
 //TODO///////
 //uncommentare il led 14 nel main e commentarlo/rimuoverl in onCanInterrupt
@@ -121,6 +122,10 @@ onTimer1Interrupt{
         dSignalLed_switch(DSIGNAL_LED_RG14);
         //Sensors_send();
         timer1_counter2 = 0;
+        test_targetSlip += 100;
+        Can_resetWritePacket();
+        Can_addIntToWritePacket(test_targetSlip);
+        Can_write(GCU_TRACTION_CONTROL_EFI_ID);
     }
     //*/
     if (timer1_counter3 >= 10) {
