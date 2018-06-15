@@ -62,12 +62,6 @@ main
 			setInterruptPriority
 		setTimer
 		setInterruptPriority
-		Can_addIntToWritePacket
-			Can_addByteToWritePacket
-		Can_write
-			CAN1Write
-				CAN1IDToRegs
-			Can_getWriteFlags
 	Buzzer_Bip
 CAN_Interrupt
 	Can_read
@@ -129,8 +123,12 @@ timer1_interrupt
 	GCU_isAlive
 		Can_resetWritePacket
 		Can_addIntToWritePacket
+			Can_addByteToWritePacket
 		Clutch_get
 		Can_write
+			CAN1Write
+				CAN1IDToRegs
+			Can_getWriteFlags
 	dSignalLed_switch
 	Can_resetWritePacket
 	Can_addIntToWritePacket

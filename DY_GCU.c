@@ -27,7 +27,7 @@ unsigned int test_targetSlip = 500;
 unsigned int clutch_test = 0;
 
 unsigned int test_rpmLimiter = 0;
-unsigned int test_launchActive = 0;
+unsigned int test_launchActive = 1;
 
 //TODO///////
 //uncommentare il led 14 nel main e commentarlo/rimuoverl in onCanInterrupt
@@ -101,12 +101,14 @@ void init(void) {
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
-    Can_addIntToWritePacket(0xFFFF);
-    Can_addIntToWritePacket(0);
-    Can_addIntToWritePacket(0);
-    Can_addIntToWritePacket(0);
-    
+   /*
+    Can_resetWritePacket();
+    Can_addIntToWritePacket(test_launchActive);
+    Can_addIntToWritePacket(test_launchActive);
+    Can_addIntToWritePacket(test_launchActive);
+    Can_addIntToWritePacket(test_launchActive);
     Can_write(GCU_LAUNCH_CONTROL_EFI_ID);
+    */
 }
 
 void main() {
@@ -152,17 +154,19 @@ onTimer1Interrupt{
     if (timer1_counter2 >= 1000) {
         dSignalLed_switch(DSIGNAL_LED_RG14);
         //Sensors_send();
+        
         timer1_counter2 = 0;
-
-        if (test_targetSlip == 900)
-           test_targetSlip = 500;
-        test_targetSlip += 100;
+        if (test_targetSlip > 750)
+           test_targetSlip = 0;
         Can_resetWritePacket();
         Can_addIntToWritePacket(test_targetSlip);
-        Can_addIntToWritePacket(0);
-        Can_addIntToWritePacket(0);
-        Can_addIntToWritePacket(0);
+        Can_addIntToWritePacket(test_targetSlip);
+        Can_addIntToWritePacket(test_targetSlip);
+        Can_addIntToWritePacket(test_targetSlip);
         Can_write(GCU_TRACTION_CONTROL_EFI_ID);
+        Can_write(GCU_LAUNCH_CONTROL_EFI_ID);
+        test_targetSlip += 50;
+        
         if (test_rpmLimiter == 900)
           test_rpmLimiter = 0;
         test_rpmLimiter += 300;
@@ -199,7 +203,22 @@ onTimer1Interrupt{
       #endif
         timer1_counter3 = 0;
     }
-    
+    if (timer1_counter4 >= 100)
+    {
+        Can_resetWritePacket();
+        Can_addIntToWritePacket(20);
+        Can_addIntToWritePacket(20);
+        Can_addIntToWritePacket(20);
+        Can_addIntToWritePacket(20);
+        Can_write(GCU_DEBUG_1_ID);
+        Can_resetWritePacket();
+        Can_addIntToWritePacket(20);
+        Can_addIntToWritePacket(20);
+        Can_addIntToWritePacket(20);
+        Can_addIntToWritePacket(20);
+        Can_write(GCU_DEBUG_2_ID);
+        timer1_counter4 = 0;
+    }
     /* RIO DELETED
 
     if (timer1_counter4 >= RIO_UPDATE_RATE_ms) {
