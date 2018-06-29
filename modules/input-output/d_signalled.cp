@@ -69,7 +69,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 26 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
+#line 22 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -80,18 +80,13 @@ void dSignalLed_unset(unsigned char led);
 #line 7 "C:/Users/Salvatore/Desktop/git Repo/GCU/modules/input-output/d_signalled.c"
 void dSignalLed_init(void) {
   TRISG14_bit  =  0 ;
-  TRISG12_bit  =  0 ;
  dSignalLed_unset( 0 );
- dSignalLed_unset( 1 );
 }
 
 void dSignalLed_switch(unsigned char led) {
  switch (led) {
  case  0 :
   RG14_bit  = ! RG14_bit ;
- break;
- case  1 :
-  RG12_bit  = ! RG12_bit ;
  break;
  }
 }
@@ -101,9 +96,6 @@ void dSignalLed_set(unsigned char led) {
  case  0 :
   RG14_bit  =  1 ;
  break;
- case  1 :
-  RG12_bit  =  1 ;
- break;
  }
 }
 
@@ -111,9 +103,6 @@ void dSignalLed_unset(unsigned char led) {
  switch (led) {
  case  0 :
   RG14_bit  =  0 ;
- break;
- case  1 :
-  RG12_bit  =  0 ;
  break;
  }
 }

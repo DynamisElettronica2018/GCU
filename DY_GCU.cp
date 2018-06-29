@@ -70,7 +70,7 @@ int getMinimumAnalogClockConversion(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 26 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
+#line 22 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -181,7 +181,7 @@ void Clutch_setBiased(unsigned char value);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
-#line 30 "c:/users/salvatore/desktop/git repo/gcu/modules/enginecontrol.h"
+#line 25 "c:/users/salvatore/desktop/git repo/gcu/modules/enginecontrol.h"
 void EngineControl_init(void);
 
 void EngineControl_keyOn(void);
@@ -374,16 +374,11 @@ void StopLight_init(void);
 void StopLight_setupPWM(void);
 
 void StopLight_setBrightness(unsigned char percentage);
-#line 23 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 22 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-unsigned int test_targetSlip = 500;
-unsigned int clutch_test = 0;
-
-unsigned int test_rpmLimiter = 0;
-unsigned int test_launchActive = 1;
-#line 51 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 39 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
@@ -392,13 +387,13 @@ void GCU_isAlive(void) {
  Can_resetWritePacket();
  Can_addIntToWritePacket((unsigned int) 99 );
  Can_addIntToWritePacket((unsigned int)(Clutch_get() | 0 ));
-
  Can_addIntToWritePacket(0);
  Can_addIntToWritePacket(0);
  Can_write( 0b01100010000 );
 
 }
-#line 85 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+
+
 void init(void) {
  dSignalLed_init();
  Can_init();
@@ -409,10 +404,10 @@ void init(void) {
  GearShift_init();
  StopLight_init();
  Buzzer_init();
-#line 102 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 72 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
-#line 112 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 82 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
 }
 
 void main() {
@@ -460,25 +455,9 @@ void main() {
 
 
  timer1_counter2 = 0;
- if (test_targetSlip > 750)
- test_targetSlip = 0;
- Can_resetWritePacket();
- Can_addIntToWritePacket(test_targetSlip);
- Can_addIntToWritePacket(test_targetSlip);
- Can_addIntToWritePacket(test_targetSlip);
- Can_addIntToWritePacket(test_targetSlip);
- Can_write( 0b10100000000 );
- Can_write( 0b10100000001 );
- test_targetSlip += 50;
-
- if (test_rpmLimiter == 900)
- test_rpmLimiter = 0;
- test_rpmLimiter += 300;
-#line 197 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  }
-
  if (timer1_counter3 >= 10) {
-#line 204 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 135 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  timer1_counter3 = 0;
  }
  if (timer1_counter4 >= 100)
@@ -497,7 +476,7 @@ void main() {
  Can_write( 0b01100010111 );
  timer1_counter4 = 0;
  }
-#line 239 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 162 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {
@@ -531,25 +510,25 @@ void main() {
  EngineControl_resetStartCheck();
  EngineControl_start();
  break;
-#line 287 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 210 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  case  0b01000000000 :
  GearShift_injectCommand(firstInt);
  break;
-#line 301 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 224 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  case  0b01000000001 :
-#line 306 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 229 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
- Buzzer_Bip();
+
  Clutch_setBiased(dataBuffer[0]);
 
  }
-#line 314 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 237 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  break;
-#line 341 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 264 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  case  0b01100000100 :
 
  break;
-#line 366 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 289 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  default:
  break;
  }

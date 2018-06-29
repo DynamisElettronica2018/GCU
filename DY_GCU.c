@@ -16,18 +16,12 @@
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
-//#include "gcu_rio.h"
 //#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-unsigned int test_targetSlip = 500;
-unsigned int clutch_test = 0;
-
-unsigned int test_rpmLimiter = 0;
-unsigned int test_launchActive = 1;
 
 //TODO///////
 //uncommentare il led 14 nel main e commentarlo/rimuoverl in onCanInterrupt
@@ -42,12 +36,6 @@ unsigned int test_launchActive = 1;
   int timer1_aac_counter = 0;
 #endif
 
-/*
-//variables to send data from efi to rio
-extern int rio_efiData[RIO_NUM_EFI_DATA];
-extern int timer1_rioEfiCounter;
-*/
-
 unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
@@ -56,31 +44,12 @@ void GCU_isAlive(void) {
     Can_resetWritePacket();
     Can_addIntToWritePacket((unsigned int)CAN_COMMAND_GCU_IS_ALIVE);
     Can_addIntToWritePacket((unsigned int)(Clutch_get() | 0 ));
-//    Can_addIntToWritePacket(aac_getExternValue(WHEEL_SPEED));
     Can_addIntToWritePacket(0);
     Can_addIntToWritePacket(0);
     Can_write(GCU_CLUTCH_FB_SW_ID);
 
 }
-/*//test to EFI analog sampling
-init_testSamplingToEfi()
-{
-  unsigned char sensors_pinIndex = 0;
-  setupAnalogSampling();
-  setAnalogPIN(sensors_pinIntex);
-  turnOnAnalogModule();
-}
 
-void Sensors_send(void) {
-    Can_resetWritePacket();
-    Can_addIntToWritePacket(sensors_fanCurrent);
-    Can_addIntToWritePacket(0);
-    Can_addIntToWritePacket(0);
-    Can_addIntToWritePacket(0);
-    Can_write(GCU_SENSE_ID);
-}
-//end test
-*/
 
 void init(void) {
     dSignalLed_init();
@@ -92,9 +61,10 @@ void init(void) {
     GearShift_init();
     StopLight_init();
     Buzzer_init();
-    //init_testSamplingToEfi();
     //Sensors_init();
-    //rio_init();
+
+
+    
   #ifdef AAC_H
     aac_init();
   #endif
@@ -156,46 +126,7 @@ onTimer1Interrupt{
         //Sensors_send();
         
         timer1_counter2 = 0;
-        if (test_targetSlip > 750)
-           test_targetSlip = 0;
-        Can_resetWritePacket();
-        Can_addIntToWritePacket(test_targetSlip);
-        Can_addIntToWritePacket(test_targetSlip);
-        Can_addIntToWritePacket(test_targetSlip);
-        Can_addIntToWritePacket(test_targetSlip);
-        Can_write(GCU_TRACTION_CONTROL_EFI_ID);
-        Can_write(GCU_LAUNCH_CONTROL_EFI_ID);
-        test_targetSlip += 50;
-        
-        if (test_rpmLimiter == 900)
-          test_rpmLimiter = 0;
-        test_rpmLimiter += 300;
-        /*
-        Can_resetWritePacket();
-        Can_addIntToWritePacket(test_launchActive);
-        Can_addIntToWritePacket(test_rpmLimiter);
-        */
-        /*Can_addIntToWritePacket(0);
-        Can_addIntToWritePacket(0);
-        Can_addIntToWritePacket(0);
-        Can_addIntToWritePacket(0);
-        Can_write(GCU_LAUNCH_CONTROL_EFI_ID);
-        if (test_launchActive == 0)
-          test_launchActive = 0xFFFF;
-        else if (test_launchActive = 0xFFFF)
-          test_launchActive = 0;*/
-
-        /*
-        //start clutch test servo
-        Clutch_setBiased(clutch_test);
-        if (clutch_test == 100)
-          clutch_test = 0;
-        else
-          clutch_test = 100;
-        //end test clutch servo
-        */
-    }
-    //*/
+      }
     if (timer1_counter3 >= 10) {
         //rio_sendTimes();
       #ifdef AAC_H
@@ -219,14 +150,6 @@ onTimer1Interrupt{
         Can_write(GCU_DEBUG_2_ID);
         timer1_counter4 = 0;
     }
-    /* RIO DELETED
-
-    if (timer1_counter4 >= RIO_UPDATE_RATE_ms) {
-       //dSignalLed_switch(DSIGNAL_LED_RG12);
-        //rio_send();
-        timer1_counter4 = 0;
-    }
-    */
 
   #ifdef AAC_H
     timer1_aac_counter += 1;
@@ -304,7 +227,7 @@ onCanInterrupt{
                 //aac_stop();
           #endif
             if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
-              Buzzer_Bip();
+              //Buzzer_Bip();
               Clutch_setBiased(dataBuffer[0]);
               //Clutch_set(dataBuffer[0]);
             }

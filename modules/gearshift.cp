@@ -136,7 +136,7 @@ void Clutch_setBiased(unsigned char value);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 26 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
+#line 22 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);

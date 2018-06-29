@@ -72,7 +72,7 @@ int getMinimumAnalogClockConversion(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 26 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
+#line 22 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -80,7 +80,7 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 30 "c:/users/salvatore/desktop/git repo/gcu/modules/enginecontrol.h"
+#line 25 "c:/users/salvatore/desktop/git repo/gcu/modules/enginecontrol.h"
 void EngineControl_init(void);
 
 void EngineControl_keyOn(void);
@@ -100,10 +100,8 @@ unsigned char engineControl_startCheckCounter;
 
 void EngineControl_init(void) {
   TRISD.B5  =  0 ;
-  TRISD.B1  =  0 ;
   TRISG.B15  =  0 ;
 
-  LATD1_bit  =  1 ;
   RG15_bit  =  1 ;
  engineControl_isChecking =  0 ;
  EngineControl_resetStartCheck();
@@ -121,13 +119,11 @@ void EngineControl_keyOff(void) {
 }
 
 void EngineControl_start(void) {
- dSignalLed_set( 1 );
-  LATD5_bit  =  1 ;
+  LATD5_biT  =  1 ;
 }
 
 void EngineControl_stop(void) {
- dSignalLed_unset( 1 );
-  LATD5_bit  =  0 ;
+  LATD5_biT  =  0 ;
 }
 
 void EngineControl_resetStartCheck(void) {

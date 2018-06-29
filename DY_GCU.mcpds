@@ -12,7 +12,7 @@ Value=0
 [USE_HEAP]
 Value=0
 [HEAP_SIZE]
-Value=0
+Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
@@ -38,7 +38,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=12
+Count=18
 File0=DY_GCU.c
 File1=modules\gearshift.c
 File2=modules\aac\aac.c
@@ -51,6 +51,12 @@ File8=modules\clutch.c
 File9=modules\clutch.h
 File10=modules\input-output\clutchmotor.c
 File11=modules\input-output\clutchmotor.h
+File12=modules\input-output\d_signalled.h
+File13=modules\enginecontrol.c
+File14=modules\enginecontrol.h
+File15=modules\input-output\d_signalled.c
+File16=modules\input-output\gearmotor.c
+File17=modules\stoplight.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

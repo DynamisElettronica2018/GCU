@@ -18,7 +18,6 @@ main
 		EngineControl_init
 			EngineControl_resetStartCheck
 			EngineControl_stop
-				dSignalLed_unset
 		GearMotor_init
 			GearMotor_release
 		ClutchMotor_init
@@ -75,7 +74,6 @@ CAN_Interrupt
 	GearShift_setCurrentGear
 	EngineControl_resetStartCheck
 	EngineControl_start
-		dSignalLed_set
 	GearShift_injectCommand
 		GearShift_setNeutral
 			GearShift_down
@@ -108,7 +106,6 @@ CAN_Interrupt
 			GearShift_down
 		Efi_setRPMLimiter
 		Efi_unsetRPMLimiter
-	Buzzer_Bip
 	Clutch_setBiased
 		Clutch_set
 timer4_interrupt

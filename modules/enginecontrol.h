@@ -10,16 +10,11 @@
 #include "d_signalled.h"
 
 #define ENGINE_STARTER_Direction   TRISD.B5
-#define ENGINE_KILL_Direction  TRISD.B1
 #define ENGINE_KEY_Direction  TRISG.B15
 
-#define ENGINE_STARTER LATD5_bit
-#define ENGINE_KILL LATD1_bit
+#define ENGINE_STARTER LATD5_biT
 #define ENGINE_KEY LATG15_bit
 #define ENGINE_KEY RG15_bit
-
-#define ENGINE_KILLED 0
-#define ENGINE_NOT_KILLED 1
 
 #define ENGINE_KEY_OFF 0
 #define ENGINE_KEY_ON 1

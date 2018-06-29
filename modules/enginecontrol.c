@@ -9,10 +9,8 @@ unsigned char engineControl_startCheckCounter;
 
 void EngineControl_init(void) {
     ENGINE_STARTER_Direction = OUTPUT;
-    ENGINE_KILL_Direction = OUTPUT;
     ENGINE_KEY_Direction = OUTPUT;
 
-    ENGINE_KILL = ENGINE_NOT_KILLED;
     ENGINE_KEY = ENGINE_KEY_ON;
     engineControl_isChecking = FALSE;
     EngineControl_resetStartCheck();
@@ -30,12 +28,10 @@ void EngineControl_keyOff(void) {
 }
 //*/
 void EngineControl_start(void) {
-    dSignalLed_set(DSIGNAL_LED_RG12);
     ENGINE_STARTER = TRUE;
 }
 
 void EngineControl_stop(void) {
-    dSignalLed_unset(DSIGNAL_LED_RG12);
     ENGINE_STARTER = FALSE;
 }
 

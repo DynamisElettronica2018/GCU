@@ -70,7 +70,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 26 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
+#line 22 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);

@@ -9,16 +9,12 @@
 #include "dspic.h"
 
 #define DSIGNAL_0_Pin RG14_bit
-#define DSIGNAL_1_Pin RG12_bit
 
 #define DSIGNAL_0_Direction TRISG14_bit
-#define DSIGNAL_1_Direction TRISG12_bit
 
 #define DSIGNAL_LED_0   0
-#define DSIGNAL_LED_1   1
 
 #define DSIGNAL_LED_RG14 DSIGNAL_LED_0
-#define DSIGNAL_LED_RG12 DSIGNAL_LED_1
 
 #define DSIGNAL_LED_ON  1
 #define DSIGNAL_LED_OFF 0
