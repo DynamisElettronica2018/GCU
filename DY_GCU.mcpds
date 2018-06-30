@@ -38,7 +38,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=18
+Count=19
 File0=DY_GCU.c
 File1=modules\gearshift.c
 File2=modules\aac\aac.c
@@ -57,6 +57,7 @@ File14=modules\enginecontrol.h
 File15=modules\input-output\d_signalled.c
 File16=modules\input-output\gearmotor.c
 File17=modules\stoplight.c
+File18=DY_GCU (1).c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
