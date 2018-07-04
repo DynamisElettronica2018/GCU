@@ -16,16 +16,13 @@
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
+#include "sensors_2.h"
 //#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-
-//TODO///////
-//uncommentare il led 14 nel main e commentarlo/rimuoverl in onCanInterrupt
-
 
 #ifdef AAC_H
   extern aac_states aac_currentState;
@@ -40,6 +37,8 @@ unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� 
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
+
+
 void GCU_isAlive(void) {
     Can_resetWritePacket();
     Can_addIntToWritePacket((unsigned int)CAN_COMMAND_GCU_IS_ALIVE);
@@ -51,7 +50,9 @@ void GCU_isAlive(void) {
 }
 
 
+
 void init(void) {
+
     dSignalLed_init();
     Can_init();
     EngineControl_init();
@@ -124,6 +125,7 @@ onTimer1Interrupt{
     if (timer1_counter2 >= 1000) {
         dSignalLed_switch(DSIGNAL_LED_RG14);
         //Sensors_send();
+        sendTempSensor();
         
         timer1_counter2 = 0;
       }
@@ -191,6 +193,7 @@ onCanInterrupt{
         case SW_FIRE_GCU_ID:
             EngineControl_resetStartCheck();           //resetCheckCounter = 0
             EngineControl_start();                     //debug on LED D2 board
+            Buzzer_Bip();
             break;
 
         /*

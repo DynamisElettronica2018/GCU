@@ -74,6 +74,7 @@ CAN_Interrupt
 	GearShift_setCurrentGear
 	EngineControl_resetStartCheck
 	EngineControl_start
+	Buzzer_Bip
 	GearShift_injectCommand
 		GearShift_setNeutral
 			GearShift_down
@@ -127,6 +128,20 @@ timer1_interrupt
 				CAN1IDToRegs
 			Can_getWriteFlags
 	dSignalLed_switch
+	sendTempSensor
+		getTempSensor
+			ADC1_Read
+				ADC1_Init
+				ADC1_Get_Sample
+			_Long2Float
+			_Div_FP
+			_Mul_FP
+			_Float2Longint
+			_Sub_FP
+				_AddSub_FP
+		Can_resetWritePacket
+		Can_addIntToWritePacket
+		Can_write
 	Can_resetWritePacket
 	Can_addIntToWritePacket
 	Can_write

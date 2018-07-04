@@ -3745,6 +3745,7 @@ getexacttimerprescaler
 getexternalinterruptedge
 getminimumanalogclockconversion
 getnumberdigitcount
+gettempsensor
 gettimerperiod
 gettimerprescaler
 glcd_box
@@ -7430,6 +7431,7 @@ seg2phts_c2cfg2_bit
 sen
 sen
 sen_bit
+sendtempsensor
 setallpinasdigital
 setanalogdataoutputformat
 setanaloginterrupt
