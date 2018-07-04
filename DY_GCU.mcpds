@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=modules\traction.h
+Value=DY_GCU.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -58,34 +58,21 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=17
-Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
+Count=7
+Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\Defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
 Path2=C:\Users\Salvatore\Desktop\git Repo\GCU\
-Path3=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\
-Path4=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\
-Path5=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\
-Path6=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\input-output\
-Path7=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\libs\
-Path8=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\aac\
-Path9=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\
-Path10=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\input-output\
-Path11=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\libs\
-Path12=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\aac\
-Path13=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\
-Path14=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\input-output\
-Path15=C:\Users\Salvatore\Desktop\git Repo\GCU\libs\
-Path16=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\aac\
+Path3=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\
+Path4=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\input-output\
+Path5=C:\Users\Salvatore\Desktop\git Repo\GCU\libs\
+Path6=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\aac\
 [HEADER_PATH]
-Count=8
-Path0=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\libs\
-Path1=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\
-Path2=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\aac\
-Path3=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\input-output\
-Path4=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\
-Path5=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\input-output\
-Path6=C:\Users\Salvatore\Desktop\git Repo\GCU\libs\
-Path7=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\aac\
+Count=5
+Path0=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\
+Path1=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\input-output\
+Path2=C:\Users\Salvatore\Desktop\git Repo\GCU\libs\
+Path3=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\aac\
+Path4=C:\Users\Salvatore\Desktop\git Repo\GCU\
 [HEADERS]
 Count=19
 File0=modules\clutch.h
