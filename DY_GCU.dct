@@ -1058,6 +1058,7 @@ atan2
 atof
 atoi
 atol
+auxfb
 awhuffacsymstart
 awhuffdcsymstart
 awquanttable
@@ -2509,6 +2510,7 @@ dostartl_8
 dostartl_8_bit
 dostartl_9
 dostartl_9_bit
+drsfb
 dsignalled_init
 dsignalled_set
 dsignalled_switch
@@ -3741,12 +3743,15 @@ gearshift_up
 get_fosc_khz
 get_fosc_per_cyc
 getanalogvalue
+getauxfb
+getdrsfb
 getexacttimerprescaler
 getexternalinterruptedge
 getminimumanalogclockconversion
 getnumberdigitcount
 gettimerperiod
 gettimerprescaler
+gettractionfb
 glcd_box
 glcd_circle
 glcd_circle_fill
@@ -9094,6 +9099,7 @@ time_datediff
 time_datetoepoch
 time_epochtodate
 time_jd1970
+timer1_aac_counter
 timer1_counter0
 timer1_counter1
 timer1_counter2
@@ -9372,6 +9378,7 @@ tp_tft_rotate_180
 tp_tft_set_adc_threshold
 tp_tft_set_calibration_consts
 tp_tft_set_default_mode
+tractionfb
 trapr
 trapr
 trapr_bit

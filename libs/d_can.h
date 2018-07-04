@@ -15,7 +15,7 @@
 /************************ GCU *****************************/
 #define GCU_TRACTION_CONTROL_EFI_ID     0b10100000000 //1280       MANDATO SOLO DA GCU AD EFI!!!!
 #define GCU_LAUNCH_CONTROL_EFI_ID       0b10100000001 //1281       MANDATO SOLO DA GCU AD EFI!!!!
-#define GCU_CLUTCH_FB_SW_ID             0b01100010000 //784
+#define GCU_CLUTCH_FB_SW_ID             0b01100010000 //784        //solo clutch
 #define GCU_GEAR_TIMING_TELEMETRY_ID    0b11100001101 //1624
 
 /***** COMANDI GCU ****/
@@ -30,10 +30,11 @@
 #define SW_FIRE_GCU_ID                  0b01000000100 //516
 #define SW_GEARSHIFT_ID                 0b01000000000 //512
 #define SW_CLUTCH_TARGET_GCU_ID         0b01000000001 //513
-#define SW_LAUNCH_CONTROL_GCU_ID        0b01000000010 //514
+#define SW_ACCELERATION_GCU_ID          0b01000000010 //514
 #define SW_TRACTION_CONTROL_GCU_ID      0b01000000011 //515
 #define SW_BRAKE_BIAS_EBB_ID            0b10000000000 //1024
 #define SW_DRS_GCU_ID                   0b01000000101 //517
+                                                                 
 
 
 /************************** DCU ***************************/
@@ -75,7 +76,11 @@
 
 /************************** AUX ***************************/
 #define SW_AUX_ID                       0b11111110000 //2032
-#define GCU_AUX_ID                      0b11111110001 //2033
+#define GCU_AUX_ID                      0b11111110001 //2033         //1 coppia: traction feedback
+                                                                     //2 coppia: acceleration feedback
+                                                                     //3 coppia: DRS feedback
+                                                                     //4 coppia:
+
 #define EBB_AUX_ID                      0b11111110010 //2034
 #define DAU_FR_AUX_ID                   0b11111110011 //2035
 #define DAU_FL_AUX_ID                   0b11111110100 //2036
@@ -86,27 +91,27 @@
 
 /******************* MASKS & FILTERS **********************/
 //MASK
-#define SW_MASK_EFI_DEBUG_IMU_EBB		0b11111100000 
+#define SW_MASK_EFI_DEBUG_IMU_EBB                0b11111100000 
 //FILTERS
-#define SW_FILTER_EFI_DEBUG				0b01100000000
-#define SW_FILTER_IMU_EBB				0b11100000000
+#define SW_FILTER_EFI_DEBUG                                0b01100000000
+#define SW_FILTER_IMU_EBB                                0b11100000000
 
 //MASK
-#define GCU_MASK_EFI_SW_EBB				0b11111110100
+#define GCU_MASK_EFI_SW_EBB                                0b11111110100
 //FILTERS
-#define GCU_FILTER_EFI					0b01100000100
-#define GCU_FILTER_SW_DCU				0b01000000000
+#define GCU_FILTER_EFI                                        0b01100000100
+#define GCU_FILTER_SW_DCU                                0b01000000000
 
 //MASK
-#define ALL_MASK_AUX					0b11111110000
+#define ALL_MASK_AUX                                        0b11111110000
 //FILTER
-#define ALL_FILTER_AUX					0b11111110000
+#define ALL_FILTER_AUX                                        0b11111110000
 
 //MASK
-#define EBB_MASK_SW_DAUFR				0b11111111111
+#define EBB_MASK_SW_DAUFR                                0b11111111111
 //FILTERS
-#define EBB_FILTER_SW					0b10000000000
-#define EBB_FILTER_DAUFR				0b11001010000
+#define EBB_FILTER_SW                                        0b10000000000
+#define EBB_FILTER_DAUFR                                0b11001010000
 
 
 #endif //DD_CAN_H

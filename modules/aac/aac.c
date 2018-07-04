@@ -15,6 +15,13 @@ int aac_targetGear = -1;
 float aac_clutchStep;   //step for each "frame" of aac
 float aac_clutchValue;
 
+unsigned int accelerationFb = 0;
+
+unsigned int getAccelerationFb()
+{
+    return accelerationFb;
+}
+
 
 void aac_init(void){
     aac_currentState = OFF;
@@ -24,12 +31,18 @@ void aac_init(void){
 void aac_execute(void){
     switch (aac_currentState) {
         case START:
-            Efi_setRPMLimiter();
-//            Activate Launch Control
-            Can_writeByte(SW_AUX_ID, MEX_READY);
+            Efi_setRPMLimiter();   //controllare efi com e limite rpm
+//            Activate acceleration mode
             aac_currentState = READY;
+            accelerationFb = 1;
             aac_clutchValue = 100;
             Clutch_set((unsigned int)aac_clutchValue);
+            Can_resetWritePacket();
+            Can_addIntToWritePacket(getTractionFb());
+            Can_addIntToWritePacket(getAccelerationFb());
+            Can_addIntToWritePacket(getDRSFb());
+            Can_addIntToWritePacket(getAuxFb());
+            Can_write(GCU_AUX_ID);
             return;
         case READY:
             Clutch_set(100);

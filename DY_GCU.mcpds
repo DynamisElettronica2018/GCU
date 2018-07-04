@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=DY_GCU.c
+Value=modules\traction.h
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -16,7 +16,7 @@ Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-Count=15
+Count=18
 File0=DY_GCU.c
 File1=modules\clutch.c
 File2=modules\enginecontrol.c
@@ -32,32 +32,25 @@ File11=libs\can.c
 File12=libs\dspic.c
 File13=libs\eeprom.c
 File14=modules\aac\aac.c
+File15=modules\auxFb.c
+File16=modules\drs.c
+File17=modules\traction.c
 [BINARIES]
 Count=0
 [IMAGES]
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=19
+Count=9
 File0=DY_GCU.c
 File1=modules\gearshift.c
 File2=modules\aac\aac.c
 File3=libs\d_can.h
-File4=modules\input-output\efi.c
-File5=libs\dspic.c
-File6=libs\can.c
-File7=libs\can.h
-File8=modules\clutch.c
-File9=modules\clutch.h
-File10=modules\input-output\clutchmotor.c
-File11=modules\input-output\clutchmotor.h
-File12=modules\input-output\d_signalled.h
-File13=modules\enginecontrol.c
-File14=modules\enginecontrol.h
-File15=modules\input-output\d_signalled.c
-File16=modules\input-output\gearmotor.c
-File17=modules\stoplight.c
-File18=DY_GCU (1).c
+File4=modules\aac\aac.h
+File5=libs\eeprom.h
+File6=modules\traction.h
+File7=modules\drs.h
+File8=modules\auxFb.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -94,7 +87,7 @@ Path5=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\input-output\
 Path6=C:\Users\Salvatore\Desktop\git Repo\GCU\libs\
 Path7=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\aac\
 [HEADERS]
-Count=16
+Count=19
 File0=modules\clutch.h
 File1=modules\enginecontrol.h
 File2=modules\gearshift.h
@@ -111,6 +104,9 @@ File12=libs\can.h
 File13=libs\d_can.h
 File14=libs\dspic.h
 File15=libs\eeprom.h
+File16=modules\auxFb.h
+File17=modules\drs.h
+File18=modules\traction.h
 [PLDS]
 Count=0
 [Useses]

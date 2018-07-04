@@ -16,7 +16,11 @@
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
-//#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+#include "drs.h"
+#include "traction.h"
+#include "auxFb.h"
+
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
@@ -25,6 +29,9 @@ char isSteeringWheelAvailable;
 
 //TODO///////
 //uncommentare il led 14 nel main e commentarlo/rimuoverl in onCanInterrupt
+
+
+
 
 
 #ifdef AAC_H
@@ -71,15 +78,8 @@ void init(void) {
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
-   /*
-    Can_resetWritePacket();
-    Can_addIntToWritePacket(test_launchActive);
-    Can_addIntToWritePacket(test_launchActive);
-    Can_addIntToWritePacket(test_launchActive);
-    Can_addIntToWritePacket(test_launchActive);
-    Can_write(GCU_LAUNCH_CONTROL_EFI_ID);
-    */
-}
+    }
+
 
 void main() {
     init();
@@ -133,22 +133,6 @@ onTimer1Interrupt{
         aac_sendTimes();
       #endif
         timer1_counter3 = 0;
-    }
-    if (timer1_counter4 >= 100)
-    {
-        Can_resetWritePacket();
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_write(GCU_DEBUG_1_ID);
-        Can_resetWritePacket();
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_write(GCU_DEBUG_2_ID);
-        timer1_counter4 = 0;
     }
 
   #ifdef AAC_H
@@ -265,27 +249,24 @@ onCanInterrupt{
               //salvare dati in variabili globali
               break;
 
-        /*
-        ***** COMMENTATA PER RIFARE STRUTTURA LAUNCH ****
-        case SW_AUX_ID:
+
+        case SW_ACCELERATION_GCU_ID:
           #ifdef AAC_H
-            dSignalLed_switch(DSIGNAL_LED_RG12);
-            if(aac_currentState == OFF                                  //FOR TESTING
+            if(aac_currentState == OFF && firstInt == 1                                  //FOR TESTING
  //             && gearShift_currentGear == GEARSHIFT_NEUTRAL
  //             && aac_externValues[WHEEL_SPEED] <= 1
               ){
                 aac_currentState = START; //comment to disable AAC
             }
-            else if(aac_currentState == READY){
+            else if(aac_currentState == READY && firstInt == 2){
                 aac_currentState = START_RELEASE; //comment to disable AAC
             }
             //If none of the previous conditions are met, the aac is stopped
-            else
+            else if(firstInt == 0)
                 aac_stop();
           #endif
             break;
-        */
-              
+
         default:
             break;
     }

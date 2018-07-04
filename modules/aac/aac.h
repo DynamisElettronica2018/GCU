@@ -10,6 +10,9 @@
 #include "gearshift.h"
 #include "efi.h"
 #include "can.h"
+#include "drs.h"
+#include "traction.h"
+#include "auxFb.h"
 
 #define CODE_SET_AAC   2
 
@@ -23,6 +26,10 @@
 #define AAC_NUM_VALUES    3            //Number of aac_values enum elements
 
 //float AAC_WORK_RATE_ms = 25;
+
+extern unsigned int accelerationFb;
+
+unsigned int getAccelerationFb();
 
 typedef enum{
     OFF,

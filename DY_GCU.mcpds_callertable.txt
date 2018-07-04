@@ -59,6 +59,8 @@ main
 		Buzzer_init
 			setTimer
 			setInterruptPriority
+		aac_init
+			aac_loadDefaultParams
 		setTimer
 		setInterruptPriority
 	Buzzer_Bip
@@ -108,6 +110,8 @@ CAN_Interrupt
 		Efi_unsetRPMLimiter
 	Clutch_setBiased
 		Clutch_set
+	Buzzer_Bip
+	aac_stop
 timer4_interrupt
 	Buzzer_tick
 timer2_interrupt
@@ -127,6 +131,26 @@ timer1_interrupt
 				CAN1IDToRegs
 			Can_getWriteFlags
 	dSignalLed_switch
-	Can_resetWritePacket
-	Can_addIntToWritePacket
-	Can_write
+	aac_sendTimes
+		Can_resetWritePacket
+		Can_addIntToWritePacket
+		Can_write
+		Buzzer_Bip
+	aac_execute
+		Efi_setRPMLimiter
+		Can_writeByte
+			Can_resetWritePacket
+			Can_addByteToWritePacket
+			Can_write
+		Clutch_set
+		Clutch_get
+		Efi_unsetRPMLimiter
+		Buzzer_Bip
+		aac_stop
+		GearShift_up
+		_Float2Longint
+		_Long2Float
+		_Mul_FP
+		_Div_FP
+		_Sub_FP
+			_AddSub_FP
