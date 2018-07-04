@@ -142,6 +142,3 @@ timer1_interrupt
 		Can_resetWritePacket
 		Can_addIntToWritePacket
 		Can_write
-	Can_resetWritePacket
-	Can_addIntToWritePacket
-	Can_write

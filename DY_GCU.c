@@ -136,22 +136,6 @@ onTimer1Interrupt{
       #endif
         timer1_counter3 = 0;
     }
-    if (timer1_counter4 >= 100)
-    {
-        Can_resetWritePacket();
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_write(GCU_DEBUG_1_ID);
-        Can_resetWritePacket();
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_addIntToWritePacket(20);
-        Can_write(GCU_DEBUG_2_ID);
-        timer1_counter4 = 0;
-    }
 
   #ifdef AAC_H
     timer1_aac_counter += 1;

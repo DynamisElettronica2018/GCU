@@ -472,23 +472,7 @@ void main() {
 #line 137 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  timer1_counter3 = 0;
  }
- if (timer1_counter4 >= 100)
- {
- Can_resetWritePacket();
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_write( 0b01100010110 );
- Can_resetWritePacket();
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_write( 0b01100010111 );
- timer1_counter4 = 0;
- }
-#line 164 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 148 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {
@@ -523,25 +507,25 @@ void main() {
  EngineControl_start();
  Buzzer_Bip();
  break;
-#line 213 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 197 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  case  0b01000000000 :
  GearShift_injectCommand(firstInt);
  break;
-#line 227 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 211 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  case  0b01000000001 :
-#line 232 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 216 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
 
  Clutch_setBiased(dataBuffer[0]);
 
  }
-#line 240 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 224 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  break;
-#line 267 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 251 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  case  0b01100000100 :
 
  break;
-#line 292 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
+#line 276 "C:/Users/Salvatore/Desktop/git Repo/GCU/DY_GCU.c"
  default:
  break;
  }
